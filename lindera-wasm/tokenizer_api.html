@@ -1,0 +1,535 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Tokenizer API - Lindera Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../architecture.html"><strong aria-hidden="true">2.</strong> Architecture</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting_started/installation.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting_started/quickstart.html"><strong aria-hidden="true">3.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="../getting_started/examples.html"><strong aria-hidden="true">3.3.</strong> Examples</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../concepts.html"><strong aria-hidden="true">4.</strong> Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/morphological_analysis.html"><strong aria-hidden="true">4.1.</strong> Morphological Analysis</a></li><li class="chapter-item expanded "><a href="../concepts/dictionaries.html"><strong aria-hidden="true">4.2.</strong> Dictionaries</a></li><li class="chapter-item expanded "><a href="../concepts/tokenization.html"><strong aria-hidden="true">4.3.</strong> Tokenization</a></li><li class="chapter-item expanded "><a href="../concepts/user_dictionary.html"><strong aria-hidden="true">4.4.</strong> User Dictionary</a></li><li class="chapter-item expanded "><a href="../concepts/filters.html"><strong aria-hidden="true">4.5.</strong> Filters</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../lindera-crf.html"><strong aria-hidden="true">5.</strong> Lindera CRF</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-crf/architecture.html"><strong aria-hidden="true">5.1.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="../lindera-crf/api_reference.html"><strong aria-hidden="true">5.2.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-dictionary.html"><strong aria-hidden="true">6.</strong> Lindera Dictionary</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-dictionary/architecture.html"><strong aria-hidden="true">6.1.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="../lindera-dictionary/api_reference.html"><strong aria-hidden="true">6.2.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-trainer.html"><strong aria-hidden="true">7.</strong> Lindera Trainer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-trainer/architecture.html"><strong aria-hidden="true">7.1.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="../lindera-trainer/api_reference.html"><strong aria-hidden="true">7.2.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera.html"><strong aria-hidden="true">8.</strong> Lindera Library</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera/segmenter.html"><strong aria-hidden="true">8.1.</strong> Segmenter</a></li><li class="chapter-item expanded "><a href="../lindera/error_handling.html"><strong aria-hidden="true">8.2.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="../lindera/api_reference.html"><strong aria-hidden="true">8.3.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-analysis.html"><strong aria-hidden="true">9.</strong> Lindera Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-analysis/configuration.html"><strong aria-hidden="true">9.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="../lindera-analysis/filters.html"><strong aria-hidden="true">9.2.</strong> Filters</a></li><li class="chapter-item expanded "><a href="../lindera-analysis/architecture.html"><strong aria-hidden="true">9.3.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="../lindera-analysis/api_reference.html"><strong aria-hidden="true">9.4.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-cli.html"><strong aria-hidden="true">10.</strong> Lindera CLI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-cli/installation.html"><strong aria-hidden="true">10.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../lindera-cli/commands.html"><strong aria-hidden="true">10.2.</strong> Commands</a></li><li class="chapter-item expanded "><a href="../lindera-cli/tutorial.html"><strong aria-hidden="true">10.3.</strong> Tutorial</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-python.html"><strong aria-hidden="true">11.</strong> Lindera Python</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-python/installation.html"><strong aria-hidden="true">11.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../lindera-python/quickstart.html"><strong aria-hidden="true">11.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="../lindera-python/tokenizer_api.html"><strong aria-hidden="true">11.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="../lindera-python/dictionary_management.html"><strong aria-hidden="true">11.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="../lindera-python/text_processing_pipeline.html"><strong aria-hidden="true">11.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="../lindera-python/training.html"><strong aria-hidden="true">11.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-nodejs.html"><strong aria-hidden="true">12.</strong> Lindera Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-nodejs/installation.html"><strong aria-hidden="true">12.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../lindera-nodejs/quickstart.html"><strong aria-hidden="true">12.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="../lindera-nodejs/tokenizer_api.html"><strong aria-hidden="true">12.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="../lindera-nodejs/dictionary_management.html"><strong aria-hidden="true">12.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="../lindera-nodejs/text_processing_pipeline.html"><strong aria-hidden="true">12.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="../lindera-nodejs/training.html"><strong aria-hidden="true">12.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-ruby.html"><strong aria-hidden="true">13.</strong> Lindera Ruby</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-ruby/installation.html"><strong aria-hidden="true">13.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../lindera-ruby/quickstart.html"><strong aria-hidden="true">13.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="../lindera-ruby/tokenizer_api.html"><strong aria-hidden="true">13.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="../lindera-ruby/dictionary_management.html"><strong aria-hidden="true">13.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="../lindera-ruby/text_processing_pipeline.html"><strong aria-hidden="true">13.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="../lindera-ruby/training.html"><strong aria-hidden="true">13.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-php.html"><strong aria-hidden="true">14.</strong> Lindera PHP</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-php/installation.html"><strong aria-hidden="true">14.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../lindera-php/quickstart.html"><strong aria-hidden="true">14.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="../lindera-php/tokenizer_api.html"><strong aria-hidden="true">14.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="../lindera-php/dictionary_management.html"><strong aria-hidden="true">14.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="../lindera-php/text_processing_pipeline.html"><strong aria-hidden="true">14.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="../lindera-php/training.html"><strong aria-hidden="true">14.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-wasm.html"><strong aria-hidden="true">15.</strong> Lindera WASM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-wasm/installation.html"><strong aria-hidden="true">15.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../lindera-wasm/quickstart.html"><strong aria-hidden="true">15.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="../lindera-wasm/tokenizer_api.html" class="active"><strong aria-hidden="true">15.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="../lindera-wasm/dictionary_management.html"><strong aria-hidden="true">15.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="../lindera-wasm/browser_usage.html"><strong aria-hidden="true">15.5.</strong> Browser Usage</a></li><li class="chapter-item expanded "><a href="../lindera-wasm/opfs.html"><strong aria-hidden="true">15.6.</strong> OPFS Dictionary Storage</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../lindera-ipadic.html"><strong aria-hidden="true">16.</strong> Lindera IPADIC</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-ipadic/dictionary_format.html"><strong aria-hidden="true">16.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="../lindera-ipadic/build.html"><strong aria-hidden="true">16.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="../lindera-ipadic/examples.html"><strong aria-hidden="true">16.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-ipadic-neologd.html"><strong aria-hidden="true">17.</strong> Lindera IPADIC NEologd</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-ipadic-neologd/dictionary_format.html"><strong aria-hidden="true">17.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="../lindera-ipadic-neologd/build.html"><strong aria-hidden="true">17.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="../lindera-ipadic-neologd/examples.html"><strong aria-hidden="true">17.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-unidic.html"><strong aria-hidden="true">18.</strong> Lindera UniDic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-unidic/dictionary_format.html"><strong aria-hidden="true">18.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="../lindera-unidic/build.html"><strong aria-hidden="true">18.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="../lindera-unidic/examples.html"><strong aria-hidden="true">18.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-sudachidict.html"><strong aria-hidden="true">19.</strong> Lindera SudachiDict</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-sudachidict/dictionary_format.html"><strong aria-hidden="true">19.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="../lindera-sudachidict/build.html"><strong aria-hidden="true">19.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="../lindera-sudachidict/examples.html"><strong aria-hidden="true">19.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-ko-dic.html"><strong aria-hidden="true">20.</strong> Lindera ko-dic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-ko-dic/dictionary_format.html"><strong aria-hidden="true">20.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="../lindera-ko-dic/build.html"><strong aria-hidden="true">20.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="../lindera-ko-dic/examples.html"><strong aria-hidden="true">20.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-cc-cedict.html"><strong aria-hidden="true">21.</strong> Lindera CC-CEDICT</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-cc-cedict/dictionary_format.html"><strong aria-hidden="true">21.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="../lindera-cc-cedict/build.html"><strong aria-hidden="true">21.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="../lindera-cc-cedict/examples.html"><strong aria-hidden="true">21.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../lindera-jieba.html"><strong aria-hidden="true">22.</strong> Lindera Jieba</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../lindera-jieba/dictionary_format.html"><strong aria-hidden="true">22.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="../lindera-jieba/build.html"><strong aria-hidden="true">22.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="../lindera-jieba/examples.html"><strong aria-hidden="true">22.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../sudachidict.html"><strong aria-hidden="true">23.</strong> SudachiDict (Custom Build)</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../migration_v3_to_v4.html"><strong aria-hidden="true">24.</strong> Migration v3 to v4</a></li><li class="chapter-item expanded "><a href="../migration_v4_to_v5.html"><strong aria-hidden="true">25.</strong> Migration v4 to v5</a></li><li class="chapter-item expanded "><a href="../migration_v5_to_v6.html"><strong aria-hidden="true">26.</strong> Migration v5 to v6</a></li><li class="chapter-item expanded "><a href="../migration_v6_to_v7.html"><strong aria-hidden="true">27.</strong> Migration v6 to v7</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../development.html"><strong aria-hidden="true">28.</strong> Development Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../development/build_and_test.html"><strong aria-hidden="true">28.1.</strong> Build & Test</a></li><li class="chapter-item expanded "><a href="../development/feature_flags.html"><strong aria-hidden="true">28.2.</strong> Feature Flags</a></li><li class="chapter-item expanded "><a href="../development/project_structure.html"><strong aria-hidden="true">28.3.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../development/training_pipeline.html"><strong aria-hidden="true">28.4.</strong> Training Pipeline</a></li><li class="chapter-item expanded "><a href="../development/contributing.html"><strong aria-hidden="true">28.5.</strong> Contributing</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Lindera Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/lindera/lindera" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="tokenizer-api"><a class="header" href="#tokenizer-api">Tokenizer API</a></h1>
+<p>This page documents the JavaScript/TypeScript API exposed by lindera-wasm.</p>
+<h2 id="tokenizerbuilder"><a class="header" href="#tokenizerbuilder">TokenizerBuilder</a></h2>
+<p>Builder class for creating a configured <code>Tokenizer</code> instance.</p>
+<h3 id="constructor"><a class="header" href="#constructor">Constructor</a></h3>
+<pre><code class="language-javascript">const builder = new TokenizerBuilder();
+</code></pre>
+<p>Creates a new builder with default settings.</p>
+<h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
+<p>Every setter returns a builder handle that shares the same configuration, so
+the calls can be chained (<code>builder.setMode("normal").setDictionary(...)</code>) or
+made one statement at a time. The returned handle is a new object, but it
+configures the same underlying builder.</p>
+<h4 id="setmodemode"><a class="header" href="#setmodemode"><code>setMode(mode)</code></a></h4>
+<p>Sets the tokenization mode.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>mode</code> (string) -- <code>"normal"</code> or <code>"decompose"</code></li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<pre><code class="language-javascript">builder.setMode("normal");
+</code></pre>
+<h4 id="setdictionaryuri"><a class="header" href="#setdictionaryuri"><code>setDictionary(uri)</code></a></h4>
+<p>Sets the dictionary to use for tokenization.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>uri</code> (string) -- Dictionary URI (e.g., <code>"embedded://ipadic"</code>)</li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<pre><code class="language-javascript">builder.setDictionary("embedded://ipadic");
+</code></pre>
+<h4 id="setdictionaryinstancedictionary"><a class="header" href="#setdictionaryinstancedictionary"><code>setDictionaryInstance(dictionary)</code></a></h4>
+<p>Sets a pre-loaded dictionary instance for tokenization.
+Use this when the dictionary has been loaded from bytes (e.g., via <code>loadDictionaryFromBytes()</code>) instead of from a URI.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>dictionary</code> (Dictionary) -- A loaded dictionary object</li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<pre><code class="language-javascript">import { loadDictionaryFromBytes } from 'lindera-wasm';
+import { loadDictionaryFiles } from 'lindera-wasm/opfs';
+
+const files = await loadDictionaryFiles("ipadic");
+const dictionary = loadDictionaryFromBytes(
+    files.metadata, files.dictTrie, files.dictValsIdx, files.dictVals,
+    files.dictWordsIdx, files.dictWords, files.matrixMtx, files.charDef, files.unk,
+);
+
+builder.setDictionaryInstance(dictionary);
+</code></pre>
+<h4 id="setuserdictionaryinstanceuserdictionary"><a class="header" href="#setuserdictionaryinstanceuserdictionary"><code>setUserDictionaryInstance(userDictionary)</code></a></h4>
+<p>Sets a pre-loaded user dictionary instance. Load one from bytes with <code>loadUserDictionaryFromBytes()</code> (CSV) or <code>loadUserDictionaryBinFromBytes()</code> (prebuilt <code>.bin</code>); URI-based user dictionaries are not available on WebAssembly.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>userDictionary</code> (UserDictionary) -- A loaded user dictionary object</li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<h4 id="setkeepwhitespacekeep"><a class="header" href="#setkeepwhitespacekeep"><code>setKeepWhitespace(keep)</code></a></h4>
+<p>Sets whether whitespace tokens are preserved in the output. Kept whitespace also stays in the lattice, so the other tokens can differ from those of the default output, which skips whitespace in the lattice as MeCab does. The WASM binding cannot turn whitespace skipping itself off: it has no setter for it and no configuration-file entry point, so the dictionary's default applies (skipping, except with SudachiDict).</p>
+<ul>
+<li><strong>Parameters</strong>: <code>keep</code> (boolean) -- <code>true</code> to keep whitespace tokens</li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<pre><code class="language-javascript">builder.setKeepWhitespace(true);
+</code></pre>
+<h4 id="setspacepenaltyvalue"><a class="header" href="#setspacepenaltyvalue"><code>setSpacePenalty(value)</code></a></h4>
+<p>Sets the left-space penalty for Korean: a candidate that starts right after whitespace and whose part-of-speech tag normally attaches to the preceding word (particles, endings, ...) gets a cost added.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>value</code> (boolean | object | null | undefined) -- The setting, with the same meaning as <code>segmenter.space_penalty</code> in a <a href="../lindera-analysis/configuration.html">configuration file</a></li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<p><code>value</code> takes one of these forms; any other value throws an error string:</p>
+<ul>
+<li><code>null</code> or <code>undefined</code> -- The default: the rules the dictionary ships in its <code>metadata.json</code>, if any (ko-dic ships mecab-ko-dic's rules; the other bundled dictionaries ship none). Use it to undo an earlier call.</li>
+<li><code>false</code> -- Turns the penalty off.</li>
+<li><code>true</code> -- Requires the dictionary's rules; <code>build()</code> throws for a dictionary that ships none.</li>
+<li>An object of the form <code>{ rules: [{ pos: [...], cost: n }, ...] }</code> -- Applies these rules instead. A candidate whose first part-of-speech tag is listed in <code>pos</code> gets <code>cost</code> added; the first matching rule wins.</li>
+</ul>
+<p>The setting applies both to a dictionary set with <code>setDictionary()</code> and to one set with <code>setDictionaryInstance()</code>, such as a ko-dic loaded from OPFS with <code>loadDictionaryFromBytes()</code>. The dictionary object itself is not changed. A tokenizer created with the <code>Tokenizer</code> constructor always uses the dictionary's default; build it with <code>TokenizerBuilder</code> to change the setting.</p>
+<pre><code class="language-javascript">// Turn the penalty off
+builder.setSpacePenalty(false);
+
+// Explicit rules
+builder.setSpacePenalty({
+    rules: [
+        { pos: ["EC", "EF", "EP", "ETM", "ETN", "VCP", "XSA", "XSN", "XSV"], cost: 3000 },
+        { pos: ["JC", "JKB", "JKC", "JKG", "JKO", "JKQ", "JKS", "JKV", "JX"], cost: 6000 },
+    ],
+});
+</code></pre>
+<blockquote>
+<p>[!NOTE]
+Since v6.1.0, ko-dic applies the left-space penalty by default, as mecab-ko does. For example, <code>검색 이 잘 된다</code> reads <code>이</code> as the interjection <code>IC</code>; without the penalty, as the subject particle <code>JKS</code>. Call <code>builder.setSpacePenalty(false)</code> to turn it off. Only a ko-dic built by Lindera 6.1.0 or later ships the rules; with a ko-dic from the v6.0.0 release the penalty stays off and <code>true</code> fails until the dictionary is rebuilt. See <a href="../lindera/segmenter.html#left-space-penalty-korean">Segmenter</a> for details.</p>
+</blockquote>
+<h4 id="appendcharacterfiltername-args"><a class="header" href="#appendcharacterfiltername-args"><code>appendCharacterFilter(name, args)</code></a></h4>
+<p>Appends a character filter to the preprocessing pipeline.</p>
+<ul>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>name</code> (string) -- Filter name (e.g., <code>"unicode_normalize"</code>, <code>"japanese_iteration_mark"</code>)</li>
+<li><code>args</code> (object, optional) -- Filter configuration</li>
+</ul>
+</li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<pre><code class="language-javascript">builder.appendCharacterFilter("unicode_normalize", { kind: "nfkc" });
+</code></pre>
+<h4 id="appendtokenfiltername-args"><a class="header" href="#appendtokenfiltername-args"><code>appendTokenFilter(name, args)</code></a></h4>
+<p>Appends a token filter to the postprocessing pipeline.</p>
+<ul>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>name</code> (string) -- Filter name (e.g., <code>"japanese_stop_tags"</code>, <code>"lowercase"</code>)</li>
+<li><code>args</code> (object, optional) -- Filter configuration</li>
+</ul>
+</li>
+<li><strong>Returns</strong>: <code>TokenizerBuilder</code></li>
+</ul>
+<pre><code class="language-javascript">builder.appendTokenFilter("japanese_stop_tags", {
+    tags: ["助詞,格助詞,一般", "助詞,係助詞", "助詞,連体化", "助動詞", "記号,句点", "記号,読点"]
+});
+</code></pre>
+<p>The arguments of <code>setSpacePenalty</code>, <code>appendCharacterFilter</code> and <code>appendTokenFilter</code> may nest arrays, objects and <code>Map</code>s at most 128 levels deep. A deeper value, or one that contains itself, throws an error string.</p>
+<h4 id="build"><a class="header" href="#build"><code>build()</code></a></h4>
+<p>Builds and returns a configured <code>Tokenizer</code> instance. The builder remains
+usable afterwards, so multiple tokenizers can be built from the same
+configuration.</p>
+<ul>
+<li><strong>Returns</strong>: <code>Tokenizer</code></li>
+</ul>
+<pre><code class="language-javascript">const tokenizer = builder.build();
+</code></pre>
+<h2 id="tokenizer"><a class="header" href="#tokenizer">Tokenizer</a></h2>
+<p>The main tokenizer class. Can be created via <code>TokenizerBuilder.build()</code> or directly via the constructor.</p>
+<h3 id="tokenizer-constructor"><a class="header" href="#tokenizer-constructor">Tokenizer Constructor</a></h3>
+<pre><code class="language-javascript">const tokenizer = new Tokenizer(dictionary, mode, userDictionary, spacePenalty);
+</code></pre>
+<ul>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>dictionary</code> (Dictionary) -- A loaded dictionary object</li>
+<li><code>mode</code> (string, optional) -- Tokenization mode (<code>"normal"</code> or <code>"decompose"</code>, defaults to <code>"normal"</code>)</li>
+<li><code>userDictionary</code> (UserDictionary, optional) -- A loaded user dictionary</li>
+<li><code>spacePenalty</code> (boolean | object, optional) -- The left-space penalty, in the forms <a href="#setspacepenaltyvalue"><code>setSpacePenalty()</code></a> accepts. <code>null</code> or <code>undefined</code> (the default) uses the rules the dictionary ships. An invalid setting throws an error string, as <code>setSpacePenalty()</code> and <code>build()</code> do.</li>
+</ul>
+</li>
+</ul>
+<h3 id="tokenizer-methods"><a class="header" href="#tokenizer-methods">Tokenizer Methods</a></h3>
+<h4 id="tokenizetext"><a class="header" href="#tokenizetext"><code>tokenize(text)</code></a></h4>
+<p>Tokenizes the input text.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>text</code> (string) -- Text to tokenize</li>
+<li><strong>Returns</strong>: <code>Token[]</code> -- Array of token objects</li>
+</ul>
+<pre><code class="language-javascript">const tokens = tokenizer.tokenize("関西国際空港");
+</code></pre>
+<h4 id="tokenizesurfacestext"><a class="header" href="#tokenizesurfacestext"><code>tokenizeSurfaces(text)</code></a></h4>
+<p>Tokenizes the input text and returns only the token surfaces. This is the fast path for wakati-style use: no token objects are created and no morphological details are loaded, so it is significantly faster than <code>tokenize</code> when only the surface strings are needed. The result equals <code>tokenizer.tokenize(text).map((t) =&gt; t.surface)</code>. (Unrelated to Web Workers.)</p>
+<ul>
+<li><strong>Parameters</strong>: <code>text</code> (string) -- Text to tokenize</li>
+<li><strong>Returns</strong>: <code>string[]</code> -- Array of surface strings</li>
+</ul>
+<pre><code class="language-javascript">const surfaces = tokenizer.tokenizeSurfaces("関西国際空港");
+// ["関西国際空港"]
+</code></pre>
+<h4 id="tokenizenbesttext-n-unique-costthreshold"><a class="header" href="#tokenizenbesttext-n-unique-costthreshold"><code>tokenizeNbest(text, n, unique?, costThreshold?)</code></a></h4>
+<p>Returns N-best tokenization results ordered by total path cost.</p>
+<ul>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>text</code> (string) -- Text to tokenize</li>
+<li><code>n</code> (number) -- Number of results to return</li>
+<li><code>unique</code> (boolean, optional) -- Deduplicate results with identical segmentation (default: <code>false</code>)</li>
+<li><code>costThreshold</code> (bigint, optional) -- Only return paths within <code>bestCost + threshold</code></li>
+</ul>
+</li>
+<li><strong>Returns</strong>: Array of <code>{ tokens: Token[], cost: number }</code></li>
+</ul>
+<pre><code class="language-javascript">const results = tokenizer.tokenizeNbest("すもももももももものうち", 3);
+
+// With a cost threshold -- note that it must be passed as a bigint literal
+const resultsWithThreshold = tokenizer.tokenizeNbest("すもももももももものうち", 3, false, 100n);
+</code></pre>
+<h2 id="token"><a class="header" href="#token">Token</a></h2>
+<p>A single token produced by the tokenizer, as a plain JavaScript object.</p>
+<h3 id="properties"><a class="header" href="#properties">Properties</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>surface</code></td><td><code>string</code></td><td>Surface form of the token</td></tr>
+<tr><td><code>byteStart</code></td><td><code>number</code></td><td>Start byte offset in the original text</td></tr>
+<tr><td><code>byteEnd</code></td><td><code>number</code></td><td>End byte offset in the original text</td></tr>
+<tr><td><code>position</code></td><td><code>number</code></td><td>Position index of the token</td></tr>
+<tr><td><code>wordId</code></td><td><code>number</code></td><td>Word ID in the dictionary</td></tr>
+<tr><td><code>isUnknown</code></td><td><code>boolean</code></td><td>Whether the token is an unknown word</td></tr>
+<tr><td><code>details</code></td><td><code>string[]</code></td><td>Morphological detail fields</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p>[!NOTE]
+Tokens are plain objects, not <code>wasm_bindgen</code> class instances. A class instance keeps its data on the Rust heap until the JavaScript side drops it, so a synchronous loop that tokenizes without yielding accumulates memory; nothing is allocated on the Rust side for a plain object, and the result passes through <code>JSON.stringify</code>, <code>structuredClone</code>, and worker transfer without conversion. Field names are camelCase, matching the <code>lindera-nodejs</code> binding.</p>
+</blockquote>
+<h3 id="reading-details"><a class="header" href="#reading-details">Reading Details</a></h3>
+<p>Index <code>details</code> directly. Out-of-range indexes yield <code>undefined</code>.</p>
+<pre><code class="language-javascript">const pos = token.details[0];     // e.g., "名詞"
+const reading = token.details[7]; // e.g., "トウキョウ"
+</code></pre>
+<h3 id="serializing-a-token"><a class="header" href="#serializing-a-token">Serializing a Token</a></h3>
+<p>A token is already a plain object, so it serializes as-is.</p>
+<pre><code class="language-javascript">console.log(JSON.stringify(token, null, 2));
+</code></pre>
+<h2 id="helper-functions"><a class="header" href="#helper-functions">Helper Functions</a></h2>
+<blockquote>
+<p>[!NOTE]
+The examples below import from <code>lindera-wasm-ipadic</code>, an illustrative package name for a local build with the <code>embed-ipadic</code> feature -- it is not published to npm. Only <code>lindera-wasm</code> is actually published; see <a href="./installation.html#npm-package-naming-convention">NPM Package Naming Convention</a>.</p>
+</blockquote>
+<h3 id="loaddictionaryuri"><a class="header" href="#loaddictionaryuri"><code>loadDictionary(uri)</code></a></h3>
+<p>Loads a dictionary from the specified URI.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>uri</code> (string) -- Dictionary URI (e.g., <code>"embedded://ipadic"</code>)</li>
+<li><strong>Returns</strong>: <code>Dictionary</code></li>
+</ul>
+<pre><code class="language-javascript">import { loadDictionary } from 'lindera-wasm-ipadic';
+
+const dict = loadDictionary("embedded://ipadic");
+</code></pre>
+<h3 id="loaduserdictionaryfrombytescsv-metadata"><a class="header" href="#loaduserdictionaryfrombytescsv-metadata"><code>loadUserDictionaryFromBytes(csv, metadata)</code></a></h3>
+<p>Builds a user dictionary from CSV bytes (UTF-8), obtained via <code>fetch</code>, a file input, or OPFS.</p>
+<ul>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>csv</code> (Uint8Array) -- The user dictionary CSV content</li>
+<li><code>metadata</code> (Metadata) -- Metadata of the system dictionary the user dictionary will be used with (e.g. <code>dictionary.metadata</code>)</li>
+</ul>
+</li>
+<li><strong>Returns</strong>: <code>UserDictionary</code></li>
+</ul>
+<h3 id="loaduserdictionarybinfrombytesbytes"><a class="header" href="#loaduserdictionarybinfrombytesbytes"><code>loadUserDictionaryBinFromBytes(bytes)</code></a></h3>
+<p>Loads a prebuilt user dictionary (the output of <code>lindera build --user</code>) from bytes.</p>
+<ul>
+<li><strong>Parameters</strong>: <code>bytes</code> (Uint8Array) -- The <code>.bin</code> content</li>
+<li><strong>Returns</strong>: <code>UserDictionary</code></li>
+</ul>
+<h3 id="version--getversion"><a class="header" href="#version--getversion"><code>version()</code> / <code>getVersion()</code></a></h3>
+<p>Returns the version string of the lindera-wasm package.</p>
+<ul>
+<li><strong>Returns</strong>: <code>string</code></li>
+</ul>
+<pre><code class="language-javascript">import { version } from 'lindera-wasm-ipadic';
+
+console.log(version()); // e.g., "7.0.0"
+</code></pre>
+<h2 id="enums-and-utility-classes"><a class="header" href="#enums-and-utility-classes">Enums and Utility Classes</a></h2>
+<h3 id="mode"><a class="header" href="#mode">Mode</a></h3>
+<p>Tokenization mode enum.</p>
+<div class="table-wrapper"><table><thead><tr><th>Value</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>Mode.Normal</code></td><td>Standard tokenization based on dictionary cost</td></tr>
+<tr><td><code>Mode.Decompose</code></td><td>Decompose compound words using penalty-based segmentation</td></tr>
+</tbody></table>
+</div>
+<h3 id="penalty"><a class="header" href="#penalty">Penalty</a></h3>
+<p>Configuration for decompose mode. Controls how aggressively compound words are decomposed.</p>
+<pre><code class="language-javascript">const penalty = new Penalty(
+    kanjiThreshold?,     // Kanji length threshold (default: 2)
+    kanjiPenalty?,       // Kanji length penalty (default: 3000)
+    otherThreshold?,     // Other character length threshold (default: 7)
+    otherPenalty?,       // Other character length penalty (default: 1700)
+);
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>kanji_penalty_length_threshold</code></td><td><code>number</code></td><td><code>2</code></td><td>Length threshold for kanji compound splitting</td></tr>
+<tr><td><code>kanji_penalty_length_penalty</code></td><td><code>number</code></td><td><code>3000</code></td><td>Penalty cost for kanji compounds exceeding threshold</td></tr>
+<tr><td><code>other_penalty_length_threshold</code></td><td><code>number</code></td><td><code>7</code></td><td>Length threshold for non-kanji compound splitting</td></tr>
+<tr><td><code>other_penalty_length_penalty</code></td><td><code>number</code></td><td><code>1700</code></td><td>Penalty cost for non-kanji compounds exceeding threshold</td></tr>
+</tbody></table>
+</div>
+<h3 id="linderaerror"><a class="header" href="#linderaerror">LinderaError</a></h3>
+<p>Error type for Lindera operations.</p>
+<pre><code class="language-javascript">const error = new LinderaError("message");
+console.log(error.message);    // "message"
+console.log(error.toString()); // "message"
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Property / Method</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>message</code></td><td><code>string</code></td><td>Error message</td></tr>
+<tr><td><code>toString()</code></td><td><code>string</code></td><td>Returns the error message</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p>[!NOTE]
+<code>LinderaError</code> is exported as a utility class, but the current error paths in <code>TokenizerBuilder</code>, <code>Tokenizer</code>, and the dictionary-loading functions (<code>lindera-wasm/src/tokenizer.rs</code>, <code>lindera-wasm/src/dictionary.rs</code>) all reject with <code>JsValue::from_str(...)</code>, not a <code>JsLinderaError</code>/<code>LinderaError</code> instance. In practice, failures thrown by these APIs surface in JavaScript as plain strings, so catch them with <code>catch (e) { ... }</code> and treat <code>e</code> as a <code>string</code>, not as a <code>LinderaError</code> instance.</p>
+</blockquote>
+<h2 id="snake-case-aliases"><a class="header" href="#snake-case-aliases">Snake-Case Aliases</a></h2>
+<p>For consistency with the Python API, all methods are also available in snake_case form:</p>
+<div class="table-wrapper"><table><thead><tr><th>camelCase</th><th>snake_case</th></tr></thead><tbody>
+<tr><td><code>setMode()</code></td><td><code>set_mode()</code></td></tr>
+<tr><td><code>setDictionary()</code></td><td><code>set_dictionary()</code></td></tr>
+<tr><td><code>setDictionaryInstance()</code></td><td><code>set_dictionary_instance()</code></td></tr>
+<tr><td><code>setUserDictionaryInstance()</code></td><td><code>set_user_dictionary_instance()</code></td></tr>
+<tr><td><code>setKeepWhitespace()</code></td><td><code>set_keep_whitespace()</code></td></tr>
+<tr><td><code>setSpacePenalty()</code></td><td><code>set_space_penalty()</code></td></tr>
+<tr><td><code>appendCharacterFilter()</code></td><td><code>append_character_filter()</code></td></tr>
+<tr><td><code>appendTokenFilter()</code></td><td><code>append_token_filter()</code></td></tr>
+<tr><td><code>tokenizeSurfaces()</code></td><td><code>tokenize_surfaces()</code></td></tr>
+<tr><td><code>tokenizeNbest()</code></td><td><code>tokenize_nbest()</code></td></tr>
+<tr><td><code>loadDictionary()</code></td><td><code>load_dictionary()</code></td></tr>
+<tr><td><code>loadDictionaryFromBytes()</code></td><td><code>load_dictionary_from_bytes()</code></td></tr>
+<tr><td><code>loadUserDictionaryFromBytes()</code></td><td><code>load_user_dictionary_from_bytes()</code></td></tr>
+<tr><td><code>loadUserDictionaryBinFromBytes()</code></td><td><code>load_user_dictionary_bin_from_bytes()</code></td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../lindera-wasm/quickstart.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../lindera-wasm/dictionary_management.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../lindera-wasm/quickstart.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../lindera-wasm/dictionary_management.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

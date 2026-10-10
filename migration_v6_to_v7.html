@@ -1,0 +1,1358 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Migration v6 to v7 - Lindera Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">2.</strong> Architecture</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="getting_started/installation.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting_started/quickstart.html"><strong aria-hidden="true">3.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="getting_started/examples.html"><strong aria-hidden="true">3.3.</strong> Examples</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="concepts.html"><strong aria-hidden="true">4.</strong> Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="concepts/morphological_analysis.html"><strong aria-hidden="true">4.1.</strong> Morphological Analysis</a></li><li class="chapter-item expanded "><a href="concepts/dictionaries.html"><strong aria-hidden="true">4.2.</strong> Dictionaries</a></li><li class="chapter-item expanded "><a href="concepts/tokenization.html"><strong aria-hidden="true">4.3.</strong> Tokenization</a></li><li class="chapter-item expanded "><a href="concepts/user_dictionary.html"><strong aria-hidden="true">4.4.</strong> User Dictionary</a></li><li class="chapter-item expanded "><a href="concepts/filters.html"><strong aria-hidden="true">4.5.</strong> Filters</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="lindera-crf.html"><strong aria-hidden="true">5.</strong> Lindera CRF</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-crf/architecture.html"><strong aria-hidden="true">5.1.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="lindera-crf/api_reference.html"><strong aria-hidden="true">5.2.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-dictionary.html"><strong aria-hidden="true">6.</strong> Lindera Dictionary</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-dictionary/architecture.html"><strong aria-hidden="true">6.1.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="lindera-dictionary/api_reference.html"><strong aria-hidden="true">6.2.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-trainer.html"><strong aria-hidden="true">7.</strong> Lindera Trainer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-trainer/architecture.html"><strong aria-hidden="true">7.1.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="lindera-trainer/api_reference.html"><strong aria-hidden="true">7.2.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="lindera.html"><strong aria-hidden="true">8.</strong> Lindera Library</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera/segmenter.html"><strong aria-hidden="true">8.1.</strong> Segmenter</a></li><li class="chapter-item expanded "><a href="lindera/error_handling.html"><strong aria-hidden="true">8.2.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="lindera/api_reference.html"><strong aria-hidden="true">8.3.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-analysis.html"><strong aria-hidden="true">9.</strong> Lindera Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-analysis/configuration.html"><strong aria-hidden="true">9.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="lindera-analysis/filters.html"><strong aria-hidden="true">9.2.</strong> Filters</a></li><li class="chapter-item expanded "><a href="lindera-analysis/architecture.html"><strong aria-hidden="true">9.3.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="lindera-analysis/api_reference.html"><strong aria-hidden="true">9.4.</strong> API Reference</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-cli.html"><strong aria-hidden="true">10.</strong> Lindera CLI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-cli/installation.html"><strong aria-hidden="true">10.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="lindera-cli/commands.html"><strong aria-hidden="true">10.2.</strong> Commands</a></li><li class="chapter-item expanded "><a href="lindera-cli/tutorial.html"><strong aria-hidden="true">10.3.</strong> Tutorial</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-python.html"><strong aria-hidden="true">11.</strong> Lindera Python</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-python/installation.html"><strong aria-hidden="true">11.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="lindera-python/quickstart.html"><strong aria-hidden="true">11.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="lindera-python/tokenizer_api.html"><strong aria-hidden="true">11.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="lindera-python/dictionary_management.html"><strong aria-hidden="true">11.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="lindera-python/text_processing_pipeline.html"><strong aria-hidden="true">11.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="lindera-python/training.html"><strong aria-hidden="true">11.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-nodejs.html"><strong aria-hidden="true">12.</strong> Lindera Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-nodejs/installation.html"><strong aria-hidden="true">12.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="lindera-nodejs/quickstart.html"><strong aria-hidden="true">12.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="lindera-nodejs/tokenizer_api.html"><strong aria-hidden="true">12.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="lindera-nodejs/dictionary_management.html"><strong aria-hidden="true">12.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="lindera-nodejs/text_processing_pipeline.html"><strong aria-hidden="true">12.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="lindera-nodejs/training.html"><strong aria-hidden="true">12.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-ruby.html"><strong aria-hidden="true">13.</strong> Lindera Ruby</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-ruby/installation.html"><strong aria-hidden="true">13.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="lindera-ruby/quickstart.html"><strong aria-hidden="true">13.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="lindera-ruby/tokenizer_api.html"><strong aria-hidden="true">13.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="lindera-ruby/dictionary_management.html"><strong aria-hidden="true">13.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="lindera-ruby/text_processing_pipeline.html"><strong aria-hidden="true">13.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="lindera-ruby/training.html"><strong aria-hidden="true">13.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-php.html"><strong aria-hidden="true">14.</strong> Lindera PHP</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-php/installation.html"><strong aria-hidden="true">14.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="lindera-php/quickstart.html"><strong aria-hidden="true">14.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="lindera-php/tokenizer_api.html"><strong aria-hidden="true">14.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="lindera-php/dictionary_management.html"><strong aria-hidden="true">14.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="lindera-php/text_processing_pipeline.html"><strong aria-hidden="true">14.5.</strong> Text Processing Pipeline</a></li><li class="chapter-item expanded "><a href="lindera-php/training.html"><strong aria-hidden="true">14.6.</strong> Training</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-wasm.html"><strong aria-hidden="true">15.</strong> Lindera WASM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-wasm/installation.html"><strong aria-hidden="true">15.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="lindera-wasm/quickstart.html"><strong aria-hidden="true">15.2.</strong> Quick Start</a></li><li class="chapter-item expanded "><a href="lindera-wasm/tokenizer_api.html"><strong aria-hidden="true">15.3.</strong> Tokenizer API</a></li><li class="chapter-item expanded "><a href="lindera-wasm/dictionary_management.html"><strong aria-hidden="true">15.4.</strong> Dictionary Management</a></li><li class="chapter-item expanded "><a href="lindera-wasm/browser_usage.html"><strong aria-hidden="true">15.5.</strong> Browser Usage</a></li><li class="chapter-item expanded "><a href="lindera-wasm/opfs.html"><strong aria-hidden="true">15.6.</strong> OPFS Dictionary Storage</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="lindera-ipadic.html"><strong aria-hidden="true">16.</strong> Lindera IPADIC</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-ipadic/dictionary_format.html"><strong aria-hidden="true">16.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="lindera-ipadic/build.html"><strong aria-hidden="true">16.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="lindera-ipadic/examples.html"><strong aria-hidden="true">16.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-ipadic-neologd.html"><strong aria-hidden="true">17.</strong> Lindera IPADIC NEologd</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-ipadic-neologd/dictionary_format.html"><strong aria-hidden="true">17.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="lindera-ipadic-neologd/build.html"><strong aria-hidden="true">17.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="lindera-ipadic-neologd/examples.html"><strong aria-hidden="true">17.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-unidic.html"><strong aria-hidden="true">18.</strong> Lindera UniDic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-unidic/dictionary_format.html"><strong aria-hidden="true">18.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="lindera-unidic/build.html"><strong aria-hidden="true">18.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="lindera-unidic/examples.html"><strong aria-hidden="true">18.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-sudachidict.html"><strong aria-hidden="true">19.</strong> Lindera SudachiDict</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-sudachidict/dictionary_format.html"><strong aria-hidden="true">19.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="lindera-sudachidict/build.html"><strong aria-hidden="true">19.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="lindera-sudachidict/examples.html"><strong aria-hidden="true">19.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-ko-dic.html"><strong aria-hidden="true">20.</strong> Lindera ko-dic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-ko-dic/dictionary_format.html"><strong aria-hidden="true">20.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="lindera-ko-dic/build.html"><strong aria-hidden="true">20.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="lindera-ko-dic/examples.html"><strong aria-hidden="true">20.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-cc-cedict.html"><strong aria-hidden="true">21.</strong> Lindera CC-CEDICT</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-cc-cedict/dictionary_format.html"><strong aria-hidden="true">21.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="lindera-cc-cedict/build.html"><strong aria-hidden="true">21.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="lindera-cc-cedict/examples.html"><strong aria-hidden="true">21.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="lindera-jieba.html"><strong aria-hidden="true">22.</strong> Lindera Jieba</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="lindera-jieba/dictionary_format.html"><strong aria-hidden="true">22.1.</strong> Dictionary Format</a></li><li class="chapter-item expanded "><a href="lindera-jieba/build.html"><strong aria-hidden="true">22.2.</strong> Build</a></li><li class="chapter-item expanded "><a href="lindera-jieba/examples.html"><strong aria-hidden="true">22.3.</strong> Examples</a></li></ol></li><li class="chapter-item expanded "><a href="sudachidict.html"><strong aria-hidden="true">23.</strong> SudachiDict (Custom Build)</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="migration_v3_to_v4.html"><strong aria-hidden="true">24.</strong> Migration v3 to v4</a></li><li class="chapter-item expanded "><a href="migration_v4_to_v5.html"><strong aria-hidden="true">25.</strong> Migration v4 to v5</a></li><li class="chapter-item expanded "><a href="migration_v5_to_v6.html"><strong aria-hidden="true">26.</strong> Migration v5 to v6</a></li><li class="chapter-item expanded "><a href="migration_v6_to_v7.html" class="active"><strong aria-hidden="true">27.</strong> Migration v6 to v7</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="development.html"><strong aria-hidden="true">28.</strong> Development Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="development/build_and_test.html"><strong aria-hidden="true">28.1.</strong> Build & Test</a></li><li class="chapter-item expanded "><a href="development/feature_flags.html"><strong aria-hidden="true">28.2.</strong> Feature Flags</a></li><li class="chapter-item expanded "><a href="development/project_structure.html"><strong aria-hidden="true">28.3.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="development/training_pipeline.html"><strong aria-hidden="true">28.4.</strong> Training Pipeline</a></li><li class="chapter-item expanded "><a href="development/contributing.html"><strong aria-hidden="true">28.5.</strong> Contributing</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Lindera Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/lindera/lindera" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="migrating-from-v6-to-v7"><a class="header" href="#migrating-from-v6-to-v7">Migrating from v6 to v7</a></h1>
+<p>Lindera v7.0.0 turns the <code>lindera</code> crate into a facade: it re-exports the
+morphological segmenter, now published as <code>lindera-segmenter</code>, and — through
+the new <code>analysis</code> feature, on by default — the analysis chain of
+<code>lindera-analysis</code> as <code>lindera::analysis</code>. One dependency line gives you the
+<code>Segmenter</code>, the <code>Tokenizer</code>, and every filter. The release also renames
+<code>lindera-binding-core</code> to <code>lindera-binding</code> and removes the deprecated
+<code>LINDERA_DICTIONARIES_PATH</code> fallback, as announced in v5.0.0, corrects
+the IPADIC schema, which had the <code>conjugation_type</code> and <code>conjugation_form</code>
+names swapped, keeps dictionary entries whose surface is whitespace or
+starts or ends with it, skips whitespace in the lattice as MeCab does
+(SudachiDict excepted, as Sudachi keeps it),
+resolves overlapping <code>char.def</code> lines as MeCab does, carries the context
+across <code>、</code> and <code>。</code> within a line as MeCab does, returns N-best results
+that each cover the whole input, lets unknown words start at every position
+as MeCab does, keeps the dashes and tildes of dictionary entries as written
+instead of rewriting them, removing the <code>normalize_details</code> setting, outputs
+the first CSV row among tied dictionary entries as MeCab does, chooses the
+segmentation whose last word starts later when two cost the same, as MeCab
+does, and has the lattice backtraces of <code>lindera-dictionary</code> return each
+token's end offset.
+This guide lists every breaking change and the one-line fixes for each.</p>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Change</th><th>Affects</th><th>What you do</th></tr></thead><tbody>
+<tr><td><code>lindera</code> is a facade: <code>lindera::analysis</code> re-exports <code>lindera-analysis</code> (feature <code>analysis</code>, on by default)</td><td>Rust users who depend on both <code>lindera</code> and <code>lindera-analysis</code></td><td>Bump both to <code>"7"</code> in the same step, or drop <code>lindera-analysis</code> and import from <code>lindera::analysis::…</code></td></tr>
+<tr><td><code>default-features = false</code> now means "segmenter only": it turns off <code>analysis</code> (and, as before, <code>mmap</code>)</td><td>Rust users of <code>lindera</code> with <code>default-features = false</code> who want <code>lindera::analysis</code></td><td>Add <code>"analysis"</code> to <code>features</code> (and keep <code>"mmap"</code> listed for memory-mapped loading)</td></tr>
+<tr><td>The former <code>lindera</code> crate is published as <code>lindera-segmenter</code></td><td>Nobody directly</td><td>Nothing — <code>lindera = "7"</code> re-exports it</td></tr>
+<tr><td>The raw <code>lindera-dictionary</code> modules are reachable under <code>lindera::dictionary</code></td><td>Direct <code>lindera-dictionary</code> users</td><td>Nothing — optionally drop the direct dependency and use <code>lindera::dictionary::core::…</code>, <code>::builder</code>, <code>::viterbi</code>, …</td></tr>
+<tr><td><strong>The implicit features <code>lindera-ipadic</code>, <code>lindera-ipadic-neologd</code>, <code>lindera-unidic</code>, <code>lindera-sudachidict</code>, <code>lindera-ko-dic</code>, <code>lindera-cc-cedict</code>, and <code>lindera-jieba</code> are gone</strong></td><td>Anyone enabling a dictionary crate by name in <code>features = [...]</code></td><td>Use the <code>embed-*</code> features instead</td></tr>
+<tr><td><strong><code>lindera-binding-core</code> is renamed to <code>lindera-binding</code></strong></td><td>Rust users of the binding helper crate</td><td>Depend on <code>lindera-binding</code> and replace <code>lindera_binding_core::</code> with <code>lindera_binding::</code></td></tr>
+<tr><td><strong><code>LINDERA_DICTIONARIES_PATH</code> is removed</strong></td><td>Anyone still setting the deprecated build-cache variable</td><td>Set <code>LINDERA_BUILD_DICTIONARY_CACHE_DIR</code>; the old name is now ignored</td></tr>
+<tr><td><strong>IPADIC and IPADIC-NEologd: <code>conjugation_type</code> and <code>conjugation_form</code> now name the right columns</strong></td><td>Anyone who reads these two fields by name with IPADIC or IPADIC-NEologd (<code>Token::get</code>, <code>Token::as_value</code>, <code>lindera tokenize -o json</code>, binding schemas)</td><td>Expect the two values to trade places; rebuild or re-download dictionaries made with v6.2.0 or earlier</td></tr>
+<tr><td><strong>Dictionary entries with whitespace are kept</strong></td><td>Text with U+3000 (IPADIC, IPADIC-NEologd, UniDic), text with spaces (SudachiDict), and a few entries that ended with whitespace</td><td>Expect U+3000 to be <code>記号,空白</code> / <code>空白</code> and SudachiDict to segment spaced text much closer to Sudachi; rebuild or re-download dictionaries made with v6.2.0 or earlier</td></tr>
+<tr><td><strong>Whitespace is skipped in the lattice: the words on either side of a space connect directly, as in MeCab</strong></td><td>Anyone who segments text containing whitespace with <code>keep_whitespace</code> false (the default), most visibly with ko-dic; not with SudachiDict, which keeps whitespace in the lattice as Sudachi does</td><td>Expect MeCab's segmentation for such text; <code>skip_whitespace(false)</code> (<code>"skip_whitespace": false</code>, <code>--disable-skip-whitespace</code>) restores the v6 handling of whitespace, but not the other output changes in this guide</td></tr>
+<tr><td><strong>Overlapping <code>char.def</code> lines: the last line decides</strong></td><td>Text with <code>Ð</code> (U+00D0; every dictionary except ko-dic), <code>々</code> (U+3005) or <code>〇</code> (U+3007); <code>lindera train</code> users whose <code>char.def</code> has single-code-point or overlapping lines</td><td>Expect <code>Ð</code> to stay in the output as a letter; rebuild or re-download dictionaries made with v6.2.0 or earlier</td></tr>
+<tr><td><strong>The context is carried across <code>、</code> and <code>。</code> within a line, as in MeCab</strong></td><td>Anyone who segments Japanese text with <code>、</code> or <code>。</code> inside a line</td><td>Expect some words after <code>、</code> or <code>。</code> to be read differently, mostly as MeCab reads them, and the N-best costs of such lines to change; no setting restores the v6 behavior</td></tr>
+<tr><td><strong>N-best: every result covers the whole input</strong></td><td>Anyone who asks for N-best results (<code>segment_nbest</code>, <code>tokenize_nbest</code>, <code>lindera tokenize -N</code>, the bindings' N-best methods) for input with more than one sentence</td><td>Expect the cheapest segmentations of the whole input from the second result on, and one result without tokens for an empty input; a cost threshold now applies to the whole input</td></tr>
+<tr><td><strong>Unknown words start at every position, as in MeCab</strong></td><td>Anyone who segments text with runs of katakana, symbols or Latin letters in normal mode, most visibly katakana joined by <code>・</code>, Korean sentence-final punctuation such as <code>."</code>, and Latin words with CC-CEDICT</td><td>Expect such runs to be split where MeCab splits them, and katakana- and Latin-heavy text to take about 13% more instructions; no setting restores the v6 behavior</td></tr>
+<tr><td><strong>IPADIC and IPADIC-NEologd: dashes and tildes in dictionary entries are kept as written, as in MeCab</strong></td><td>Anyone who segments text with <code>―</code> (U+2015), <code>—</code> (U+2014), <code>～</code> (U+FF5E) or <code>〜</code> (U+301C) with IPADIC or IPADIC-NEologd</td><td>Expect entries spelled with <code>―</code> or <code>～</code> to match text spelled the same way, and text with <code>—</code> or <code>〜</code> to miss the 12 IPADIC and 1,085 IPADIC-NEologd entries it found only through the old rewrite (a <code>mapping</code> character filter can fold the spellings); rebuild or re-download dictionaries made with v6.2.0 or earlier</td></tr>
+<tr><td><strong>Entries with the same surface, context IDs and cost: the first CSV row is output, as in MeCab</strong></td><td>Anyone who reads token details such as the reading or the base form with IPADIC, IPADIC-NEologd, UniDic or ko-dic, or with a user dictionary that has such entries; N-best users</td><td>Expect such words to get MeCab's details (IPADIC <code>狡い</code> reads <code>ズルイ</code>, not <code>コスイ</code>), a user entry to still win a tie with a system entry, and the first N-best result to always be the 1-best; no rebuild is needed, and no setting restores the v6 behavior</td></tr>
+<tr><td><strong>Segmentations of equal cost: the one whose last word starts later is chosen, as in MeCab</strong></td><td>Anyone who segments text, in rare places (9 of about 54,000 lines in the texts compared)</td><td>Expect such lines to be segmented as MeCab segments them (IPADIC <code>腸窒扶斯</code> is <code>腸 / 窒扶 / 斯</code>, not <code>腸 / 窒 / 扶斯</code>); no rebuild is needed, and no setting restores the v6 behavior</td></tr>
+<tr><td><strong><code>lindera tokenize</code> removes only the line terminator from each input line and writes a result for every line</strong></td><td>CLI users whose input lines start or end with whitespace, or who read the wakati or N-best output of lines without tokens</td><td>Expect the offsets to index the input line, U+3000 at the start or end of a line to be a token (IPADIC <code>記号,空白</code>), <code>--keep-whitespace</code> to output the spaces there, and an empty line or a line of spaces to give an empty wakati line and one N-best result; no setting restores the v6 behavior</td></tr>
+<tr><td><strong>The <code>normalize_details</code> setting is removed: <code>Metadata::new</code> and <code>CoreMetadata::new</code> take 10 arguments, Ruby's <code>Metadata.new</code> takes 8</strong></td><td>Code that creates or reads dictionary metadata: Rust (<code>Metadata</code>, <code>lindera_binding::CoreMetadata</code>, <code>PrefixDictionaryBuilderOptions</code>) and the <code>Metadata</code> classes of the Python, Ruby, PHP and Node.js bindings</td><td>Remove the argument, option or property; a <code>metadata.json</code> that still has the key loads, and the key is ignored</td></tr>
+<tr><td><strong><code>Lattice::tokens_offset</code>, <code>tokens_offset_into</code>, <code>nbest_tokens_offset</code> and <code>NBestGenerator::next</code> return <code>(start, end, WordId)</code></strong></td><td>Rust code that calls these <code>lindera_dictionary</code> functions directly (also as <code>lindera::dictionary::viterbi::…</code>, <code>lindera::dictionary::Lattice</code> and <code>lindera::dictionary::nbest::…</code>)</td><td>Destructure three fields and use the returned end instead of the next token's start</td></tr>
+<tr><td><strong><code>Lattice::tokens_offset_into</code> returns the BOS index of the best path (<code>Option&lt;usize&gt;</code>)</strong></td><td>Rust code that uses the <code>()</code> value of <code>tokens_offset_into</code></td><td>Nothing for a call written as a statement; otherwise ignore the new value</td></tr>
+</tbody></table>
+</div>
+<p>The language bindings (Python, Node.js, Ruby, PHP, WASM) and the CLI keep
+their package names, and their APIs apart from one setting: the <code>Metadata</code>
+classes of the Python, Node.js, Ruby and PHP bindings no longer take or
+expose <code>normalize_details</code> (see
+<a href="#the-normalize_details-setting-is-removed">The <code>normalize_details</code> setting is removed</a>).
+Their version number moves to 7.0.0.
+There are eleven output differences, all described below; the last one is
+in the CLI only. With IPADIC or
+IPADIC-NEologd, the values reported under the names <code>conjugation_type</code> and
+<code>conjugation_form</code> trade places. The dictionaries now contain the entries
+whose surface is or starts or ends with whitespace, which changes the
+segmentation of text that contains such whitespace. Text that contains
+whitespace is segmented as MeCab segments it, except with SudachiDict, which
+keeps whitespace in the lattice as Sudachi does. <code>Ð</code>, <code>々</code> and <code>〇</code> get the
+character categories that MeCab gives them, which changes the segmentation
+of text that contains them. Within a line, the words after <code>、</code> and <code>。</code>
+are read in the context of the words before them, which changes the
+segmentation of some such text and the N-best costs of every such line. For
+input with more than one sentence, the N-best results from the second one on
+are the cheapest segmentations of the whole input, and an empty input gets
+one N-best result without tokens. And in normal mode, an
+unknown word can start inside a run of characters of one kind, as in MeCab,
+which splits some runs of katakana, symbols and Latin letters. With IPADIC
+and IPADIC-NEologd, the entries spelled with <code>―</code> or <code>～</code> are found under
+that spelling, as in MeCab, which changes the segmentation of text that
+contains <code>―</code>, <code>—</code>, <code>～</code> or <code>〜</code>. Among dictionary entries that share the
+surface, the context IDs and the cost, the first CSV row is output instead
+of the last, as in MeCab, which changes the reading, the base form or other
+details of such words, and the first N-best result is always the 1-best.
+When two segmentations cost exactly the same, the one whose last word starts
+later is chosen, as in MeCab, which changes the segmentation of a few lines.
+And <code>lindera tokenize</code> removes only the line terminator from each input line
+instead of all the whitespace at its ends, which keeps U+3000 at the start
+or end of a line and makes the offsets index the line, and it writes a
+result for every line, also in the wakati format and with <code>-N</code>.
+Otherwise, for the same input and dictionary, v7.0.0 produces the same
+tokens with the same positional details as v6.2.0.</p>
+<h2 id="the-lindera-crate-is-now-a-facade"><a class="header" href="#the-lindera-crate-is-now-a-facade">The lindera crate is now a facade</a></h2>
+<p>Up to v6 the Rust API was split between two crates that you had to depend on
+separately: <code>lindera</code> (the segmenter and the dictionary loading API) and
+<code>lindera-analysis</code> (character filters, token filters, and the <code>Tokenizer</code>).
+In v7 the <code>lindera</code> crate is a thin facade over both:</p>
+<pre><code class="language-text">lindera ──┬─▶ lindera-segmenter ──┬─▶ lindera-dictionary
+          │                       ├─▶ dictionary crates   [features: embed-*]
+          │                       └─▶ lindera-trainer     [feature: train]
+          └─▶ lindera-analysis    [feature: analysis, default on] ──▶ lindera-segmenter
+</code></pre>
+<p>Its public tree keeps every <code>lindera::…</code> path of v6 and adds
+<code>lindera::analysis</code>:</p>
+<pre><code class="language-text">lindera
+├── LinderaResult, get_version()
+├── dictionary, error, mode, segmenter, space_penalty, token, worker   (from lindera-segmenter, as in v6)
+└── analysis   [feature: analysis, default on]   (lindera-analysis: character_filter, token_filter, tokenizer, worker)
+</code></pre>
+<h3 id="one-dependency-instead-of-two"><a class="header" href="#one-dependency-instead-of-two">One dependency instead of two</a></h3>
+<pre><code class="language-toml"># v6
+[dependencies]
+lindera = "6"
+lindera-analysis = "6"
+
+# v7
+[dependencies]
+lindera = "7"
+</code></pre>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// v6
+use lindera_analysis::tokenizer::Tokenizer;
+use lindera_analysis::token_filter::japanese_stop_tags::JapaneseStopTagsTokenFilter;
+
+// v7
+use lindera::analysis::tokenizer::Tokenizer;
+use lindera::analysis::token_filter::japanese_stop_tags::JapaneseStopTagsTokenFilter;
+<span class="boring">}</span></code></pre></pre>
+<p>Keeping a direct <code>lindera-analysis = "7"</code> dependency also works:
+<code>lindera::analysis</code> is that same crate, so
+<code>lindera_analysis::tokenizer::Tokenizer</code> and
+<code>lindera::analysis::tokenizer::Tokenizer</code> are one type and existing <code>use</code>
+paths need not change.</p>
+<h3 id="update-lindera-and-lindera-analysis-together"><a class="header" href="#update-lindera-and-lindera-analysis-together">Update lindera and lindera-analysis together</a></h3>
+<p>If you keep both dependencies, bump them in the same step. <code>lindera-analysis</code>
+6.x depends on the <code>lindera</code> 6.x segmenter, so a manifest with the <code>lindera</code>
+line moved to <code>"7"</code> while <code>lindera-analysis</code> stays at <code>"6"</code> pulls two
+versions of the segmenter into the build:</p>
+<pre><code class="language-toml"># Two Segmenter types: lindera 7 (via lindera-segmenter) and lindera 6 (via lindera-analysis 6)
+[dependencies]
+lindera = "7"
+lindera-analysis = "6"
+</code></pre>
+<p><code>lindera::segmenter::Segmenter</code> is then the v7 type while
+<code>lindera_analysis::tokenizer::Tokenizer::new</code> expects the v6 one, and the
+call fails to compile with a type mismatch. Move both lines to <code>"7"</code> at once,
+or drop <code>lindera-analysis</code> as shown above.</p>
+<h3 id="default-features--false-now-means-segmenter-only"><a class="header" href="#default-features--false-now-means-segmenter-only"><code>default-features = false</code> now means segmenter only</a></h3>
+<p>The facade's default features are <code>mmap</code> and <code>analysis</code>. With
+<code>default-features = false</code> you get the pure segmenter, and both are off:
+<code>lindera::analysis</code> does not exist, and memory-mapped loading is no longer
+the default for filesystem dictionaries (as in v6, where
+<code>default-features = false</code> also turned <code>mmap</code> off). Re-enable what you need:</p>
+<pre><code class="language-toml"># Segmenter with memory-mapped loading (the v6 default build)
+lindera = { version = "7", default-features = false, features = ["mmap"] }
+
+# Segmenter and analysis chain, without memory-mapped loading as the default
+lindera = { version = "7", default-features = false, features = ["analysis"] }
+</code></pre>
+<p><code>memmap2</code> itself stays linked either way through <code>lindera-dictionary</code>'s
+default features; the facade's <code>mmap</code> feature only selects the default for
+<code>use_mmap</code> in <code>load_dictionary</code> and friends, and
+<code>load_dictionary_with_options(uri, true)</code> works without it.</p>
+<h3 id="the-segmenter-is-published-as-lindera-segmenter"><a class="header" href="#the-segmenter-is-published-as-lindera-segmenter">The segmenter is published as lindera-segmenter</a></h3>
+<p>The <code>lindera</code> crate of v6 and earlier continues as <code>lindera-segmenter</code> 7.0.0,
+with the same modules (<code>dictionary</code>, <code>error</code>, <code>mode</code>, <code>segmenter</code>,
+<code>space_penalty</code>, <code>token</code>, <code>worker</code>) and the same API. The facade re-exports
+every one of them at its root, so every <code>lindera::…</code> path that compiled in v6
+compiles in v7. The crate exists so that <code>lindera-analysis</code> has a segmenter
+to build on without depending on the facade that re-exports it; nobody needs
+to depend on <code>lindera-segmenter</code> directly, and application code should keep
+depending on <code>lindera</code>.</p>
+<h2 id="linderadictionary-exposes-the-raw-dictionary-crate"><a class="header" href="#linderadictionary-exposes-the-raw-dictionary-crate"><code>lindera::dictionary</code> exposes the raw dictionary crate</a></h2>
+<p>Code that reached into the building blocks of <code>lindera-dictionary</code> — the
+dictionary data structures, the dictionary builder, the Viterbi lattice —
+used to need a direct <code>lindera-dictionary</code> dependency. In v7 these modules
+are re-exported inside <code>lindera::dictionary</code>, next to the high-level loading
+API:</p>
+<pre><code class="language-text">lindera::dictionary
+├── Dictionary, Metadata, Schema, load_dictionary, load_user_dictionary, DictionaryKind, …   (unchanged)
+├── core          lindera_dictionary::dictionary (prefix_dictionary, character_definition, connection_cost_matrix, unknown_dictionary, …)
+├── builder, error, loader, mode, nbest, space_penalty, util, viterbi
+├── embedded_dictionary!, include_bytes_aligned!
+└── trainer       lindera_trainer, with the `train` feature (unchanged)
+</code></pre>
+<p>All existing <code>lindera::dictionary::*</code> paths stay valid, and the re-exports
+are the same items — <code>lindera::dictionary::Dictionary</code> and
+<code>lindera::dictionary::core::Dictionary</code> are one type. A direct
+<code>lindera-dictionary</code> dependency keeps working; it is simply no longer
+required:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// v6: needs lindera-dictionary in Cargo.toml
+use lindera_dictionary::dictionary::prefix_dictionary::PrefixDictionary;
+use lindera_dictionary::viterbi::Lattice;
+
+// v7: reachable through the facade
+use lindera::dictionary::core::prefix_dictionary::PrefixDictionary;
+use lindera::dictionary::viterbi::Lattice;
+<span class="boring">}</span></code></pre></pre>
+<blockquote>
+<p>[!NOTE]
+<code>lindera::dictionary::core</code> shares its name with Rust's <code>core</code> crate. A
+glob import such as <code>use lindera::dictionary::*;</code> brings that module into
+scope and shadows the <code>core</code> crate for the rest of the module, so paths
+like <code>core::fmt::Debug</code> stop resolving to the standard library there.
+Import the items you need by name instead.</p>
+</blockquote>
+<h2 id="implicit-dictionary-features-removed"><a class="header" href="#implicit-dictionary-features-removed">Implicit dictionary features removed</a></h2>
+<p>In v6 the optional dictionary dependencies of <code>lindera</code> doubled as Cargo
+features: <code>features = ["lindera-ipadic"]</code> was accepted, and pulled in the
+crate without embedding a dictionary. The facade has no dictionary
+dependencies of its own, so these seven implicit features no longer exist:
+<code>lindera-ipadic</code>, <code>lindera-ipadic-neologd</code>, <code>lindera-unidic</code>,
+<code>lindera-sudachidict</code>, <code>lindera-ko-dic</code>, <code>lindera-cc-cedict</code>, and
+<code>lindera-jieba</code>. Cargo rejects a manifest that names one of them. Use the
+<code>embed-*</code> features, which have always been the documented way to embed a
+dictionary:</p>
+<pre><code class="language-toml"># v6
+[dependencies]
+lindera = { version = "6", features = ["lindera-ipadic"] }
+
+# v7
+[dependencies]
+lindera = { version = "7", features = ["embed-ipadic"] }
+</code></pre>
+<h2 id="lindera-binding-core-renamed-to-lindera-binding"><a class="header" href="#lindera-binding-core-renamed-to-lindera-binding">lindera-binding-core renamed to lindera-binding</a></h2>
+<p>This only matters if you build your own language binding on the shared
+helper crate. <code>lindera-binding</code> 7.0.0 depends on the <code>lindera</code> facade (with
+the <code>analysis</code> feature) instead of on <code>lindera</code> plus <code>lindera-analysis</code>; its
+own API — <code>CoreTokenizerBuilder</code>, <code>CoreTokenizer</code>, <code>TokenView</code>, and the
+argument, metadata, and schema helpers — is unchanged, except that
+<code>CoreMetadata</code> no longer has <code>normalize_details</code> (see
+<a href="#the-normalize_details-setting-is-removed">The <code>normalize_details</code> setting is removed</a>).
+The published
+<code>lindera-binding-core</code> releases (4.0.0 through 6.2.0) stay on crates.io as
+they are and are not yanked, but receive no further versions.</p>
+<pre><code class="language-toml"># v6
+[dependencies]
+lindera-binding-core = "6"
+
+# v7
+[dependencies]
+lindera-binding = "7"
+</code></pre>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// v6
+use lindera_binding_core::tokenizer::CoreTokenizer;
+
+// v7
+use lindera_binding::tokenizer::CoreTokenizer;
+<span class="boring">}</span></code></pre></pre>
+<h2 id="lindera_dictionaries_path-removed"><a class="header" href="#lindera_dictionaries_path-removed">LINDERA_DICTIONARIES_PATH removed</a></h2>
+<p>v5.0.0 renamed the build-time dictionary cache variable to
+<code>LINDERA_BUILD_DICTIONARY_CACHE_DIR</code> and kept the old name,
+<code>LINDERA_DICTIONARIES_PATH</code>, as a deprecated fallback with a build warning
+(see <a href="./migration_v4_to_v5.html">Migration v4 to v5</a>). v7.0.0 removes the
+fallback. A build that sets only the old name no longer uses the cache — and
+no longer warns about it: the dictionary crates download and build their
+dictionary as if no cache were configured. Rename the variable wherever it is
+set (shell profiles, CI configuration, container images):</p>
+<pre><code class="language-shell"># v6
+export LINDERA_DICTIONARIES_PATH=/path/to/cache
+
+# v7
+export LINDERA_BUILD_DICTIONARY_CACHE_DIR=/path/to/cache
+</code></pre>
+<h2 id="ipadic-conjugation-field-names-corrected"><a class="header" href="#ipadic-conjugation-field-names-corrected">IPADIC conjugation field names corrected</a></h2>
+<p>IPADIC stores 活用型, the conjugation type (for example <code>五段・カ行イ音便</code>),
+in column 8 and 活用形, the conjugation form (for example <code>連用タ接続</code>), in
+column 9. From v1.0.0 through v6.2.0, the <code>lindera-ipadic</code> and
+<code>lindera-ipadic-neologd</code> schemas named the two columns the other way round,
+so every lookup by name returned the other value. v7.0.0 corrects the names.
+UniDic and SudachiDict were already correct.</p>
+<p>For the token <code>書い</code> in <code>書いた</code>:</p>
+<div class="table-wrapper"><table><thead><tr><th>Field name</th><th>v6</th><th>v7</th></tr></thead><tbody>
+<tr><td><code>conjugation_type</code></td><td><code>連用タ接続</code></td><td><code>五段・カ行イ音便</code></td></tr>
+<tr><td><code>conjugation_form</code></td><td><code>五段・カ行イ音便</code></td><td><code>連用タ接続</code></td></tr>
+</tbody></table>
+</div>
+<p>Only access by name changes: <code>Token::get("conjugation_type")</code> and
+<code>Token::get("conjugation_form")</code>, the JSON from <code>Token::as_value()</code> and
+<code>lindera tokenize -o json</code>, and the field names in the dictionary schema
+that the bindings expose. Positional access — <code>details</code>, and the MeCab and
+wakati output formats — is unchanged, because the values were always in the
+right columns. If your code reads these fields by name, or swapped them back
+as a workaround, update it.</p>
+<p>The names come from the <code>metadata.json</code> stored in each built dictionary, not
+from the library, and the dictionary format version is unchanged. The
+embedded dictionaries (<code>embed-ipadic</code>, <code>embed-ipadic-neologd</code>) and the
+dictionaries that the 7.0.0 CLI fetches with <code>lindera download</code> carry the
+corrected names. A dictionary directory built or downloaded with v6.2.0 or
+earlier still loads in v7.0.0 but keeps the old names. For such a directory,
+either:</p>
+<ul>
+<li>rebuild it with the v7.0.0 <code>lindera-ipadic/metadata.json</code> (or
+<code>lindera-ipadic-neologd/metadata.json</code>), or download the 7.0.0 release
+asset, or</li>
+<li>swap <code>"conjugation_form"</code> and <code>"conjugation_type"</code> in the
+<code>dictionary_schema.fields</code> list of its <code>metadata.json</code>. The dictionary data
+itself is unchanged, so no rebuild is needed.</li>
+</ul>
+<p>If you build dictionaries with your own copy of the IPADIC <code>metadata.json</code>,
+apply the same swap to that copy.</p>
+<h2 id="dictionary-entries-with-whitespace-are-kept"><a class="header" href="#dictionary-entries-with-whitespace-are-kept">Dictionary entries with whitespace are kept</a></h2>
+<p>Up to v6.2.0, the dictionary builder trimmed the surface of every lexicon
+entry. An entry whose surface is whitespace was dropped, and an entry that
+starts or ends with whitespace was stored under the trimmed surface, where
+a cheaper whitespace variant could take over the entry without whitespace.
+v7.0.0 reads the surface exactly as written, as MeCab and Sudachi do:</p>
+<div class="table-wrapper"><table><thead><tr><th>Dictionary</th><th>Change</th></tr></thead><tbody>
+<tr><td>IPADIC, IPADIC-NEologd</td><td>U+3000 (ideographic space) is the dictionary entry <code>記号,空白</code> instead of an unknown <code>名詞,サ変接続</code>, so the word after it is also read as in MeCab: in <code>東京　都</code>, <code>都</code> is <code>名詞,一般</code> instead of <code>名詞,接尾</code>. <code>ルーマニア</code> has the base form <code>ルーマニア</code> instead of <code>ルーマニア</code> followed by U+3000</td></tr>
+<tr><td>UniDic</td><td>U+3000 is the entry <code>空白</code> instead of an unknown <code>名詞,普通名詞,サ変可能</code></td></tr>
+<tr><td>SudachiDict</td><td>U+0020 uses the dictionary's half-width space entry (<code>空白</code>) instead of the <code>SPACE</code> unknown word, so text with spaces is segmented much closer to Sudachi (on 600 sentences with a space between every word, agreement with Sudachi went from 201 to 597). With <code>keep_whitespace(true)</code>, each space is its own token. U+3000 is unchanged, because SudachiDict has no entry for it</td></tr>
+<tr><td>ko-dic</td><td><code>에듀</code> and <code>캘리</code> on their own are <code>NNP</code> (person names) instead of the <code>NNG</code> of their trailing-space variants</td></tr>
+<tr><td>CC-CEDICT, Jieba</td><td>No change</td></tr>
+</tbody></table>
+</div>
+<p>Entries that end with whitespace (55 in IPADIC-NEologd, 4 in ko-dic and 4 in
+SudachiDict) now match only where the text has that whitespace, as in MeCab:
+with IPADIC-NEologd, the entry <code>GeForce GTX Titan X</code> followed by a space
+matches <code>GeForce GTX Titan X です</code> but no longer <code>GeForce GTX Titan Xです</code>.
+The token ends with that whitespace, as in MeCab, whether whitespace stays
+in the lattice (<code>keep_whitespace(true)</code>, or <code>skip_whitespace(false)</code>,
+SudachiDict's default) or is skipped (the default for the other
+dictionaries, see the next section). Skipping leaves out only the whitespace
+after the entry: in <code>GeForce GTX Titan X  です</code>, with two spaces, the token
+ends with the first space. 50 of the 55 IPADIC-NEologd entries end with a
+space, as do all those of ko-dic and SudachiDict; the other 5 end with
+U+3000 or U+00A0, which are not <code>SPACE</code> characters and are never skipped.
+The Decompose length penalty counts the entry's own whitespace, as it does
+when whitespace stays in the lattice. With <code>unique</code>, N-best results that
+differ only in that whitespace are no longer folded into one, such as
+ko-dic's <code>에듀</code> followed by the space (<code>NNG</code>) and <code>에듀</code> (<code>NNP</code>) in
+<code>에듀 센터</code>.</p>
+<p>U+3000 is not in the <code>SPACE</code> character category, so it is a token even with
+<code>keep_whitespace(false)</code>, as in MeCab. To remove it, drop <code>記号,空白</code>
+(IPADIC) or <code>空白</code> (UniDic) with the <code>japanese_stop_tags</code> token filter, or
+turn it into U+0020 with the <code>unicode_normalize</code> character filter (NFKC).</p>
+<p>The change is in the dictionary builder; the dictionary format version is
+unchanged. The embedded dictionaries and the dictionaries that the 7.0.0 CLI
+fetches with <code>lindera download</code> include these entries. A dictionary
+directory built or downloaded with v6.2.0 or earlier still loads in v7.0.0
+but keeps the old entries until you rebuild it with <code>lindera build</code> or
+download the 7.0.0 release asset.</p>
+<h2 id="whitespace-is-skipped-in-the-lattice"><a class="header" href="#whitespace-is-skipped-in-the-lattice">Whitespace is skipped in the lattice</a></h2>
+<p>With <code>keep_whitespace</code> false (the default), v7.0.0 skips whitespace in the
+Viterbi lattice, as MeCab does: the word after a space connects directly to
+the word before it. v6 dropped whitespace from the output but kept it in the
+lattice as the <code>SPACE</code> unknown word, so the words around a space connected to
+that node instead of to each other. How much that changed depends on the
+dictionary's connection costs for the node: in ko-dic they are all zero, so
+every space cut the context between the words around it; in IPADIC and
+UniDic they are not zero, and the node's costs stood in for the connection
+between the words.</p>
+<p>The output changes only for sentences that contain whitespace. That includes
+a sentence that ends with the <code>\n</code> or <code>\t</code> it was split at, such as a line
+that does not end with <code>。</code>: its last word now connects to the end of the
+sentence directly.</p>
+<div class="table-wrapper"><table><thead><tr><th>Dictionary</th><th>Effect</th><th>Example</th></tr></thead><tbody>
+<tr><td>ko-dic</td><td>Spaced Korean text now follows mecab-ko</td><td><code>2년 전 대회</code>: <code>전</code> is <code>NNG</code>, not <code>저/NP + ㄴ/JX</code>; <code>하고 있다</code>: <code>있</code> is <code>VX</code>, not <code>VV</code></td></tr>
+<tr><td>IPADIC, IPADIC-NEologd, UniDic</td><td>A word after a half-width space connects to the word before it, as in MeCab</td><td>IPADIC <code>Google が 新しい</code>: <code>が</code> is a case particle, not a conjunction; <code>東京 都</code>: <code>都</code> is a suffix, as in MeCab</td></tr>
+<tr><td>SudachiDict</td><td>No change: its <code>metadata.json</code> sets <code>skip_whitespace</code> to <code>false</code>, because Sudachi keeps whitespace in the lattice and the costs assume it</td><td>—</td></tr>
+<tr><td>CC-CEDICT, Jieba</td><td>No change in the best path (these dictionaries have no connection costs); N-best costs no longer include the whitespace nodes</td><td>—</td></tr>
+</tbody></table>
+</div>
+<p>The default comes from the dictionary's <code>metadata.json</code>; a dictionary that
+does not set <code>skip_whitespace</code> skips. A SudachiDict built by Lindera 6.x has
+no such setting, so it skips whitespace until it is rebuilt or the setting
+is added to its <code>metadata.json</code>.</p>
+<p>Token surfaces and offsets never include the skipped whitespace; whitespace
+that belongs to a dictionary entry, inside it or at its end, stays in that
+entry's token, as in MeCab (see the previous section). Skipping does not
+change the segmentation of text without whitespace. <code>keep_whitespace(true)</code>
+keeps whitespace in the lattice, so its output is the same as in v6; beyond
+the whitespace tokens, it can differ from the default v7 output, which skips
+whitespace.</p>
+<p>To get the v6 handling of whitespace back, turn skipping off; whitespace is
+still dropped from the output. This does not undo the other output changes in
+this guide, such as
+<a href="#unknown-words-start-at-every-position-as-in-mecab">Unknown words start at every position, as in MeCab</a>.
+Leaving <code>skip_whitespace</code> out of the configuration, or setting it to <code>null</code>,
+keeps the dictionary's default:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Segmenter
+let segmenter = Segmenter::new(Mode::Normal, dictionary, None).skip_whitespace(false);
+// SegmentWorker
+worker.set_skip_whitespace(false);
+<span class="boring">}</span></code></pre></pre>
+<pre><code class="language-yaml"># Configuration file / TokenizerBuilder::set_segmenter_skip_whitespace(false)
+segmenter:
+  skip_whitespace: false
+</code></pre>
+<pre><code class="language-sh">lindera tokenize --disable-skip-whitespace
+</code></pre>
+<p>The language bindings have no setter for it. The Python, Node.js, Ruby and
+PHP bindings take it only through a configuration file loaded with
+<code>from_file</code> / <code>fromFile</code>; the WASM binding cannot change it and uses the
+dictionary's default.</p>
+<h2 id="overlapping-chardef-lines-are-resolved-as-in-mecab"><a class="header" href="#overlapping-chardef-lines-are-resolved-as-in-mecab">Overlapping char.def lines are resolved as in MeCab</a></h2>
+<p>A dictionary's <code>char.def</code> can list the same code point on several lines. Up
+to v6.2.0, the dictionary builder gave such a code point the categories of
+every line that covers it. v7.0.0 uses only the last line, as MeCab,
+vibrato and Kuromoji do, and lists that line's categories in the order in
+which <code>char.def</code> defines them. In the bundled dictionaries, three characters
+change (ko-dic calls the kanji categories <code>HANJA</code> and <code>HANJANUMERIC</code>, and
+CC-CEDICT and Jieba call them <code>CHINESE</code> and <code>CHINESENUMERIC</code>):</p>
+<div class="table-wrapper"><table><thead><tr><th>Character</th><th>v6 categories</th><th>v7 categories</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>Ð</code> (U+00D0)</td><td><code>SPACE</code>, <code>ALPHA</code></td><td><code>ALPHA</code></td><td>Every dictionary except ko-dic maps U+00D0 to <code>SPACE</code> (a typo for U+000D inherited from mecab-ipadic) before the <code>ALPHA</code> range, so <code>Ð</code> was dropped as whitespace and split the word around it. <code>GUÐMUNDUR さん</code> now gives <code>GUÐMUNDUR</code> and <code>さん</code> instead of <code>GU</code>, <code>MUNDUR</code> and <code>さん</code></td></tr>
+<tr><td><code>々</code> (U+3005)</td><td><code>KANJI</code>, <code>SYMBOL</code></td><td><code>SYMBOL</code></td><td>Dictionary words such as <code>人々</code> and <code>佐々木</code> are unchanged. After a kanji that the dictionary does not know, <code>々</code> is a token of its own, as in MeCab: <code>龘々</code> gives <code>龘</code> and <code>々</code> instead of one unknown word. With ko-dic, <code>々</code> is tagged <code>SY</code> instead of <code>SH</code></td></tr>
+<tr><td><code>〇</code> (U+3007)</td><td><code>KANJI</code>, <code>SYMBOL</code>, <code>KANJINUMERIC</code></td><td><code>SYMBOL</code>, <code>KANJINUMERIC</code></td><td>Runs of numerals can be grouped differently. With ko-dic, <code>二〇二六年</code> gives <code>二〇二六</code> and <code>年</code> instead of <code>二</code>, <code>〇</code>, <code>二六</code> and <code>年</code></td></tr>
+</tbody></table>
+</div>
+<p>The kanji numerals <code>一</code> to <code>九</code>, <code>十</code>, <code>百</code>, <code>千</code>, <code>万</code>, <code>億</code> and <code>兆</code> are
+also listed on two lines, but keep their categories and their order.</p>
+<p><code>lindera train</code> now reads <code>char.def</code> with the dictionary builder. It used
+to keep only the first category of each line, skip lines that name a single
+code point (such as <code>0x0020 SPACE</code>), and resolve overlaps by start position.
+The <code>%t</code> feature template now gives the first category of the last line
+that covers the character, which is MeCab's default type. The bundled
+training files have neither kind of line, so the models trained from them
+do not change.</p>
+<p>A range line without a category is now an error in <code>lindera build</code> and
+<code>lindera train</code>, as in MeCab; it would otherwise reset the earlier lines to
+<code>DEFAULT</code>.</p>
+<p>The change is in the dictionary builder; the dictionary format version is
+unchanged. The embedded dictionaries and the dictionaries that the 7.0.0 CLI
+fetches with <code>lindera download</code> have the new categories. A dictionary
+directory built or downloaded with v6.2.0 or earlier still loads in v7.0.0
+but keeps the old categories until you rebuild it with <code>lindera build</code> or
+download the 7.0.0 release asset.</p>
+<h2 id="the-context-is-carried-across--and-"><a class="header" href="#the-context-is-carried-across--and-">The context is carried across <code>、</code> and <code>。</code></a></h2>
+<p>The segmenter cuts the input into sentences at <code>\n</code>, <code>\t</code>, <code>。</code> and <code>、</code>,
+and after 32 KiB without any of them, to keep each lattice small. Up to v6,
+every sentence started from the beginning-of-sentence context (BOS) and
+ended with the connection to the end of the sentence (EOS), so the word
+after <code>、</code> or <code>。</code> was read as if it began a text. MeCab does not cut
+inside a line.
+v7.0.0 carries the context across the cuts at <code>、</code> and <code>。</code> and across the
+forced cuts: the next sentence starts from the words that end the previous
+one, and EOS is paid only at a <code>\n</code>, a <code>\t</code> or the end of the input. The
+sentences up to that point form a segment, and segments stay independent.
+The best path of a segment, and its cost, are those of one lattice over the
+whole segment, which is what MeCab gives for a line:</p>
+<div class="table-wrapper"><table><thead><tr><th>Input (dictionary)</th><th>v6</th><th>v7 (as MeCab)</th></tr></thead><tbody>
+<tr><td><code>彼は、ああ言った</code> (IPADIC)</td><td><code>ああ</code> is an interjection (<code>感動詞</code>)</td><td><code>ああ</code> is an adverb (<code>副詞</code>)</td></tr>
+<tr><td><code>だから、こんなに答える</code> (IPADIC)</td><td><code>こんな</code> (<code>連体詞</code>) and <code>に</code></td><td><code>こんなに</code> (<code>副詞</code>)</td></tr>
+<tr><td><code>選手が泳ぎ、さらにカヌーで進んだ</code> (UniDic)</td><td><code>さらに</code> is a conjunction (<code>接続詞</code>)</td><td><code>さらに</code> is an adverb (<code>副詞</code>)</td></tr>
+<tr><td><code>言語としては、Javaのオブジェクト</code> (UniDic)</td><td><code>J</code>, <code>a</code>, <code>v</code> and <code>a</code>, each <code>記号,文字</code></td><td><code>Java</code> (<code>名詞,普通名詞</code>)</td></tr>
+</tbody></table>
+</div>
+<p>On the sentences of UD Japanese GSD that contain <code>、</code>, the change alters
+50 lines with UniDic: 27 come closer to the gold segmentation and
+part-of-speech tags, 7 move away (sign test p = 0.0008), and 16 are ties.
+Of 505 paragraphs of <em>Botchan</em>, the number that Lindera segments and tags
+exactly as MeCab does went from 352 to 438 with IPADIC and from 428 to 503
+with UniDic. Text without <code>、</code>, <code>。</code> and forced cuts, such as text cut only
+at <code>\n</code> and <code>\t</code>, is not affected. Carrying the context costs the 1-best
+segmentation about 1% more instructions.</p>
+<p>The result can still differ from one lattice over the segment:</p>
+<ul>
+<li>No word spans a cut. A dictionary entry that contains <code>、</code> or <code>。</code> never
+matches: MeCab reads UniDic's <code>一、二塁</code> as one noun, Lindera as <code>一</code>,
+<code>、</code> and <code>二塁</code>. An unknown word is not grouped across a cut, and a word
+that would span a forced cut is split there.</li>
+<li>The left-space penalty (ko-dic) does not apply to a word that starts
+right at a forced cut, even when whitespace precedes the cut.</li>
+</ul>
+<p>The N-best results follow the same model. Within a segment, they are
+exactly the N best paths of one lattice over the segment: <code>unique</code> compares
+the word boundaries of the whole segment, and the cost threshold is
+measured from the first result. Across segments, the results are the
+cheapest combinations of one path per segment (see the next section). The
+first result is the 1-best segmentation. The costs of a line with <code>、</code> or
+<code>。</code> change, the first result's included, because they now include the
+connections across the cuts and the EOS connection only once.</p>
+<p>There is no setting to restore the v6 behavior.</p>
+<h2 id="n-best-results-cover-the-whole-input"><a class="header" href="#n-best-results-cover-the-whole-input">N-best results cover the whole input</a></h2>
+<p>The N-best methods (<code>Segmenter::segment_nbest</code>, <code>Tokenizer::tokenize_nbest</code>,
+their <code>_with_lattice</code> and worker forms, <code>lindera tokenize -N</code> and the
+bindings' N-best methods) cut the input into sentences as the 1-best
+segmentation does. Up to v6, they searched each sentence on its own, and
+the k-th result joined the k-th path of every sentence. From the second
+result on, that changed every sentence at once, so the results were not the
+cheapest segmentations of the input and their costs could go down, and a
+sentence with fewer than k paths was missing from the k-th result. v7.0.0
+searches the input segment by segment (see the previous section) and
+returns the N cheapest combinations of one path per segment, in ascending
+order of total cost, and every result covers the whole input:</p>
+<div class="table-wrapper"><table><thead><tr><th>Input (IPADIC, <code>-N 3</code>)</th><th>v6</th><th>v7</th></tr></thead><tbody>
+<tr><td><code>東京、です</code></td><td>3079 <code>東京 、 です</code>; 23850 <code>東 京 、 で す</code>; 24249 <code>東 京 、 で す</code></td><td>3357 <code>東京 、 です</code>; 12059 <code>東京 、 です</code> (<code>、</code> as <code>名詞,数</code>); 13633 <code>東京 、 で す</code></td></tr>
+<tr><td><code>。東京</code></td><td>13 <code>。 東京</code>; 30433 <code>。 東 京</code>; 13520 <code>東 京</code> (no <code>。</code>)</td><td>852 <code>。 東京</code>; 13569 <code>。 東 京</code>; 13636 <code>。 東 京</code></td></tr>
+</tbody></table>
+</div>
+<p>Each of these lines is one segment, so its v7 results are the three best
+paths of one lattice over the line, the ones MeCab returns. The first result
+is the 1-best segmentation, and the output for input with a single sentence
+does not change. The cost threshold (<code>cost_threshold</code>,
+<code>--nbest-cost-threshold</code>) is now measured over the whole input: a result is
+kept when its total cost is within the threshold of the first result's. v6
+applied the threshold to each sentence separately. With <code>unique</code>, the
+results still have distinct word boundaries.</p>
+<p>An empty input now gets one result without tokens, with the connection
+cost from BOS to EOS, as in MeCab and as an input of only whitespace
+already did; v6 gave no result, because an empty input has no sentence.
+This applies to <code>segment_nbest</code>, <code>tokenize_nbest</code>, their worker forms, the
+bindings' N-best methods and <code>lindera tokenize -N</code>, which now writes a
+result for an empty line.</p>
+<h2 id="unknown-words-start-at-every-position-as-in-mecab"><a class="header" href="#unknown-words-start-at-every-position-as-in-mecab">Unknown words start at every position, as in MeCab</a></h2>
+<p>A word that is not in the dictionary is read as an unknown word, built from
+the character categories of the dictionary's <code>char.def</code> (katakana, Latin
+letters, digits, symbols and so on). Most categories are set to group: a
+run of characters of one category, such as a run of katakana, becomes one
+candidate, a <em>grouped unknown word</em>. Up to v6, normal mode created no unknown
+words at the positions inside the last grouped unknown word, a shortcut
+inherited from Kuromoji that MeCab does not have. After a dictionary word
+that ends inside such a run, no unknown word could continue the path, so the
+grouped unknown word that swallowed the dictionary word was often the only
+way through. v7.0.0 creates unknown-word candidates at every position that a
+path reaches, in every mode, under MeCab's condition: the category is set to
+always create them (<code>INVOKE</code> in <code>char.def</code>), or no dictionary word starts at
+that position. Decompose mode already did this, and its output does not
+change.</p>
+<div class="table-wrapper"><table><thead><tr><th>Input (dictionary)</th><th>v6</th><th>v7 (as MeCab)</th></tr></thead><tbody>
+<tr><td><code>それが「⁂⁂第一だ</code> (IPADIC)</td><td><code>「⁂⁂</code>, one unknown noun that swallows the dictionary symbol <code>「</code></td><td><code>「</code> (<code>記号,括弧開</code>) and <code>⁂⁂</code></td></tr>
+<tr><td><code>ジョン・レノンが歌う</code> (IPADIC)</td><td><code>ジョン・レノン</code>, one unknown noun</td><td><code>ジョン</code>, <code>・</code> and <code>レノン</code></td></tr>
+<tr><td><code>ホテル・コルテシアに泊まる</code> (UniDic)</td><td><code>ホテル・コルテシア</code>, one unknown noun</td><td><code>ホテル</code>, <code>・</code> and <code>コルテシア</code></td></tr>
+<tr><td><code>"좋아."</code> (ko-dic)</td><td><code>아</code> (<code>EC</code>) and <code>."</code> (<code>SY</code>)</td><td><code>아</code> (<code>EF</code>), <code>.</code> (<code>SF</code>) and <code>"</code> (<code>SY</code>)</td></tr>
+<tr><td><code>The</code> (CC-CEDICT)</td><td><code>The</code></td><td><code>T</code> and <code>he</code></td></tr>
+</tbody></table>
+</div>
+<ul>
+<li><strong>Japanese</strong>: IPADIC, IPADIC-NEologd and UniDic put <code>・</code> in the katakana
+range of their <code>char.def</code>. After a dictionary word and <code>・</code>, an unknown
+katakana word could not start, so <code>ジョン・レノン</code> became one unknown word.
+Now the unknown word starts after them, as in MeCab. A run that starts
+with an unknown word, such as <code>レノン・ジョン</code>, stays one unknown word, in
+MeCab too. In the same way, a dictionary symbol is no longer merged into
+the unknown symbols after it.</li>
+<li><strong>Korean</strong>: a sentence-final <code>."</code>, <code>?"</code>, <code>!"</code> or <code>.'</code> was one symbol
+(<code>SY</code>). Now <code>.</code>, <code>?</code> and <code>!</code> are sentence-final punctuation (<code>SF</code>), as in
+MeCab, and the ending before them can change with it, as in <code>"좋아."</code>.</li>
+<li><strong>Chinese</strong>: with CC-CEDICT, a Latin word that starts with <code>A</code>, <code>B</code>, <code>P</code>,
+<code>Q</code> or <code>T</code> is split after that letter (<code>The</code> gives <code>T</code> and <code>he</code>, <code>TBS</code>
+gives <code>T</code>, <code>B</code> and <code>S</code>), and a run of Japanese kana is split into single
+characters, as MeCab splits them with the same dictionary. The splits
+come from the dictionary: every unknown word costs −3,200 whatever its
+length, the connection matrix has a single cell with no cost, and these
+letters are entries that cost −400, so a path with more words costs less:
+<code>T</code> and <code>he</code> (−3,600) beat <code>The</code> (−3,200). The shortcut hid this before.
+Jieba is not affected.</li>
+<li><strong>SudachiDict</strong> output can change in the same kinds of runs.</li>
+<li><strong>N-best</strong>: the first result changes as the 1-best segmentation does, and
+the other results can now include splits such as <code>G</code> and <code>oogle</code> for
+<code>Google</code> (UniDic).</li>
+</ul>
+<p>With dictionaries built from the same sources, the number of lines that
+Lindera segments and tags exactly as MeCab does rises, on top of the other
+changes in this guide, from 589 to 596 of 600 Japanese sentences and from
+438 to 459 of 505 paragraphs of <em>Botchan</em> with IPADIC, from 590 to 596 and
+from 441 to 459 with IPADIC-NEologd, and from 877 to 1,498 of 1,500 Korean
+sentences with ko-dic (with the left-space penalty off, as MeCab has none).
+No line that matched before stops matching, and UniDic is unchanged on these
+texts. On UD Japanese GSD with UniDic, 64 sentences change: 53 come closer
+to the gold segmentation and part-of-speech tags, 10 move away (sign test
+p = 3.4 × 10⁻⁸), and 1 is a tie. The 10 all match MeCab's output; GSD keeps
+some names joined by <code>・</code> and some numbers as one word.</p>
+<p>Text with many runs of katakana or Latin letters costs more, because every
+position inside a run now gets candidates, as in MeCab. Against the same
+release without this change, counting the speedups made with it, the
+instruction count rises by 13% on UD Japanese GSD (Wikipedia text; 14% to
+17% for N-best), and falls by 0.8% on <em>Botchan</em> and on Korean and by 14% to
+16% in Decompose mode. A line of 10,240 katakana without a delimiter costs
+3 to 5 times as much in 1-best and 3 to 15 times in N-best, and the peak
+memory of <code>lindera tokenize -N 3</code> on it grows from 12 to 56 MiB with IPADIC
+and from 18 to 127 MiB with UniDic.</p>
+<p>There is no setting to restore the v6 behavior. <code>unknown_word_ladder(false)</code>
+(<code>--disable-unknown-word-ladder</code>) still turns off the shorter unknown-word
+candidates, but no longer reproduces the output of Lindera before v6.</p>
+<h2 id="dash-and-tilde-spellings-are-kept-as-written"><a class="header" href="#dash-and-tilde-spellings-are-kept-as-written">Dash and tilde spellings are kept as written</a></h2>
+<p>Japanese text spells the dash and the tilde in two ways each: the dash as
+<code>―</code> (U+2015, HORIZONTAL BAR) or <code>—</code> (U+2014, EM DASH), the tilde as <code>～</code>
+(U+FF5E, FULLWIDTH TILDE) or <code>〜</code> (U+301C, WAVE DASH). Up to v6.2.0, the
+dictionary builder rewrote <code>―</code> to <code>—</code> and <code>～</code> to <code>〜</code> in every entry of
+IPADIC and IPADIC-NEologd, whose <code>metadata.json</code> turned the rewrite on with
+<code>normalize_details</code>. It rewrote the surface, the spelling under which the
+segmenter finds the entry in the text, and the detail fields, such as the
+base form and the reading. The text to segment was not rewritten, so an
+entry that the dictionary source spells with <code>―</code> or <code>～</code> matched only text
+that spelled it with <code>—</code> or <code>〜</code>. The rewrite was a workaround for an old
+EUC-JP conversion. The dictionary sources are UTF-8 now, and <code>―</code> is the dash
+that the common Shift_JIS and EUC-JP converters produce and that Aozora
+Bunko texts use. v7.0.0 keeps every entry as written in the dictionary's CSV
+files, as MeCab does:</p>
+<div class="table-wrapper"><table><thead><tr><th>Input (dictionary)</th><th>v6</th><th>v7 (as MeCab)</th></tr></thead><tbody>
+<tr><td><code>ＣＤ―ＲＯＭ</code> (IPADIC)</td><td><code>ＣＤ</code>, <code>―</code> and <code>ＲＯＭ</code></td><td><code>ＣＤ―ＲＯＭ</code> (<code>名詞,一般</code>)</td></tr>
+<tr><td><code>――</code> (IPADIC)</td><td>An unknown noun (<code>名詞,サ変接続</code>)</td><td><code>記号,一般</code></td></tr>
+<tr><td><code>あいいれなぁ～い</code> (IPADIC-NEologd)</td><td><code>あいいれなぁ</code>, <code>～</code> and <code>い</code></td><td><code>あいいれなぁ～い</code> (<code>形容詞,自立</code>)</td></tr>
+<tr><td><code>CD―ROM</code> (IPADIC-NEologd)</td><td><code>CD</code>, <code>―</code> and <code>ROM</code></td><td><code>CD―ROM</code> (<code>名詞,一般</code>)</td></tr>
+<tr><td><code>ＣＤ—ＲＯＭ</code> (IPADIC)</td><td><code>ＣＤ—ＲＯＭ</code> (<code>名詞,一般</code>)</td><td><code>ＣＤ</code>, <code>—</code> and <code>ＲＯＭ</code></td></tr>
+<tr><td><code>——</code> (IPADIC)</td><td><code>記号,一般</code></td><td>An unknown noun (<code>名詞,サ変接続</code>)</td></tr>
+</tbody></table>
+</div>
+<p>The detail fields keep the CSV spelling as well: the entry <code>ＣＤ―ＲＯＭ</code>
+gives the base form <code>ＣＤ―ＲＯＭ</code>, where v6 gave <code>ＣＤ—ＲＯＭ</code>.</p>
+<p>With dictionaries built from the same sources, the number of lines that
+Lindera segments and tags exactly as MeCab does rises, on top of the other
+changes in this guide, from 459 to 503 of 505 paragraphs of <em>Botchan</em> (from
+2,690 to 2,744 of its 2,746 sentences) and from 3,377 to 3,581 of 3,587
+paragraphs of <em>Kokoro</em> and <em>I Am a Cat</em>, two other novels from Aozora Bunko.
+The figures are the same with IPADIC and IPADIC-NEologd, and no line that
+matched before stops matching.</p>
+<p>Text that writes these characters as <code>—</code> or <code>〜</code> no longer finds the entries
+that it found only through the rewrite: 12 in IPADIC, all spelled with <code>―</code>,
+and 1,085 in IPADIC-NEologd, most of them spelled with <code>～</code>. In the table
+above, <code>ＣＤ—ＲＯＭ</code> is split and <code>——</code> is an unknown noun, as in MeCab.
+IPADIC-NEologd has most of its words with a tilde in both spellings, so text
+with either tilde still finds them.</p>
+<p>To have both spellings find the entries, map the text to the dictionary's
+spelling with the <code>mapping</code> character filter. IPADIC spells all its entries
+with a dash with <code>―</code> and all those with a tilde with <code>〜</code>, so map <code>—</code> to <code>―</code>
+and <code>～</code> to <code>〜</code>:</p>
+<pre><code class="language-sh">lindera tokenize --dict ipadic --char-filter 'mapping:{"mapping":{"—":"―","～":"〜"}}'
+</code></pre>
+<pre><code class="language-yaml"># Configuration file
+character_filters:
+  - kind: mapping
+    args:
+      mapping:
+        "—": "―"
+        "～": "〜"
+</code></pre>
+<p>With this filter, <code>ＣＤ—ＲＯＭ</code> is one word and <code>——</code> is <code>記号,一般</code> again,
+and text with <code>～</code> also finds IPADIC's entries with <code>〜</code>, which it did not
+in v6 either. The token's surface is the mapped text, such as <code>ＣＤ―ＲＯＭ</code>;
+its byte offsets point into the original text. Mapping the tilde the other
+way, <code>〜</code> to <code>～</code>, would hide IPADIC's entries with <code>〜</code>. With
+IPADIC-NEologd, a mapping trades words: some of its words exist in only one
+spelling, 129 only with <code>―</code> and 85 only with <code>—</code>, 957 only with <code>～</code> and
+1,813 only with <code>〜</code>, so mapping one spelling to the other makes text find
+the words of one and miss those of the other. NFKC normalization
+(the <code>unicode_normalize</code> character filter) does not fold these characters:
+it turns <code>～</code> into <code>~</code> and leaves <code>―</code>, <code>—</code> and <code>〜</code> as they are.</p>
+<p>User dictionaries were never rewritten and do not change. The change is in
+the dictionary builder; the dictionary format version is unchanged. The
+embedded dictionaries and the dictionaries that the 7.0.0 CLI fetches with
+<code>lindera download</code> keep the spellings. A dictionary directory built or
+downloaded with v6.2.0 or earlier still loads in v7.0.0 but keeps the
+rewritten entries until you rebuild it with <code>lindera build</code> or download the
+7.0.0 release asset. UniDic, ko-dic, CC-CEDICT, Jieba and SudachiDict never
+turned the rewrite on, and their dictionaries do not change.</p>
+<h3 id="the-normalize_details-setting-is-removed"><a class="header" href="#the-normalize_details-setting-is-removed">The <code>normalize_details</code> setting is removed</a></h3>
+<p><code>normalize_details</code> turned this rewrite on and did nothing else, so v7.0.0
+removes it from the bundled <code>metadata.json</code> files and from the APIs that
+create or expose dictionary metadata:</p>
+<div class="table-wrapper"><table><thead><tr><th>API</th><th>Change</th></tr></thead><tbody>
+<tr><td>Rust</td><td><code>Metadata::new</code> takes 10 arguments instead of 11 (<code>normalize_details</code> was the ninth), and the <code>Metadata::normalize_details</code> field and the <code>PrefixDictionaryBuilderOptions::normalize_details</code> method are gone. For binding authors, <code>lindera_binding::CoreMetadata</code> and <code>CoreMetadata::new</code> change the same way. See <a href="#rust-api-changes-in-lindera_dictionary">Rust API changes in <code>lindera_dictionary</code></a></td></tr>
+<tr><td>Python</td><td>The <code>normalize_details</code> keyword argument of <code>Metadata</code>, the property and the <code>to_dict()</code> key are gone; passing the keyword raises <code>TypeError</code></td></tr>
+<tr><td>Ruby</td><td><code>Metadata.new</code> takes 8 positional arguments instead of 9, so passing 9 raises <code>ArgumentError</code>; the <code>normalize_details</code> reader and the <code>to_h</code> key are gone</td></tr>
+<tr><td>PHP</td><td>The last argument of the <code>Metadata</code> constructor, <code>normalize_details</code>, the property and the <code>toArray()</code> key are gone; passing the argument raises <code>Error</code> (by name) or <code>ArgumentCountError</code> (as a ninth argument)</td></tr>
+<tr><td>Node.js</td><td>The <code>normalizeDetails</code> option of <code>Metadata</code>, the property and the <code>toObject()</code> key are gone; TypeScript rejects the option, and at run time it is ignored</td></tr>
+<tr><td>WASM</td><td>No change: its <code>Metadata</code> never exposed the setting</td></tr>
+</tbody></table>
+</div>
+<p>A <code>metadata.json</code> that still contains <code>normalize_details</code>, such as one
+written by v6, loads as before, whether it comes with a built dictionary,
+is passed to <code>lindera build</code> or is read by a binding; the key is ignored
+and is not written back.</p>
+<h2 id="tied-entries-resolve-to-the-first-csv-row-as-in-mecab"><a class="header" href="#tied-entries-resolve-to-the-first-csv-row-as-in-mecab">Tied entries resolve to the first CSV row, as in MeCab</a></h2>
+<p>A dictionary can have several entries with the same surface, the same left
+and right context IDs and the same cost, which differ only in their details,
+such as the reading or the base form. Such entries are tied: a path costs
+the same with any of them, so the order in which the segmenter considers
+them decides which one it outputs. Up to v6.2.0, Lindera added the
+dictionary entries that start at a position in reverse order, and the search
+keeps the earlier of two candidates with equal cost, so the last CSV row of
+a tied group won. The reverse order came in with v2.1.0, apparently by
+accident. v7.0.0 outputs the first row, as MeCab does:</p>
+<div class="table-wrapper"><table><thead><tr><th>Input (dictionary)</th><th>v6</th><th>v7 (as MeCab)</th></tr></thead><tbody>
+<tr><td><code>あいつは狡い</code> (IPADIC)</td><td><code>狡い</code> reads <code>コスイ</code></td><td><code>狡い</code> reads <code>ズルイ</code></td></tr>
+</tbody></table>
+</div>
+<p>IPADIC's <code>Adj.csv</code> has the two rows in this order:</p>
+<pre><code class="language-text">狡い,19,19,4682,形容詞,自立,*,*,形容詞・アウオ段,基本形,狡い,ズルイ,ズルイ
+狡い,19,19,4682,形容詞,自立,*,*,形容詞・アウオ段,基本形,狡い,コスイ,コスイ
+</code></pre>
+<p>Tied entries exist for 5,637 surfaces in IPADIC, 90,991 in IPADIC-NEologd,
+3,324 in UniDic and 175 in ko-dic. In the Japanese dictionaries, the rows of
+a tied group never differ in the part of speech, only in fields such as the
+reading and the base form; in ko-dic, 5 groups also differ in the part of
+speech. With each tied surface on its own line, the number of surfaces whose
+full details equal those of MeCab 0.996 rises from 1,607 to 5,637 of 5,637
+with IPADIC, from 524 to 3,324 of 3,324 with UniDic, and from 8,205 to
+86,319 of 86,464 with IPADIC-NEologd (surfaces with whitespace or control
+characters left out). The other 145 IPADIC-NEologd surfaces contain <code>、</code>,
+which no word spans (see
+<a href="#the-context-is-carried-across--and-">The context is carried across <code>、</code> and <code>。</code></a>),
+or belong to groups whose rows MeCab reads in another order (see below).
+With ko-dic, all 175 agree when MeCab's dictionary is built from the CSV
+files in name order.</p>
+<p>On running text, the number of lines whose full details equal MeCab's rises,
+on top of the other changes in this guide, from 7,989 to 8,096 of the 8,100
+sentences of UD Japanese GSD and from 3,278 to 3,583 of the 3,587 paragraphs
+of <em>Kokoro</em> and <em>I Am a Cat</em> with IPADIC, and from 3,394 to 3,571 of the
+same 3,587 paragraphs with UniDic. No line is segmented differently. In all
+the texts compared, 15 tokens change their part of speech, all to MeCab's.
+Most of them are entries of the same surface with different context IDs and
+costs whose paths happen to cost the same in that sentence, and the same
+order decides between them: UniDic, for example, now reads <code>御前</code> as a
+pronoun (<code>代名詞</code>) instead of a common noun (<code>名詞,普通名詞,一般</code>), as
+MeCab does.</p>
+<p>User dictionaries follow the same rule: among tied user entries, the first
+row is now chosen instead of the last. A user entry that ties with a system
+entry is still chosen over it, as in v6. This is the one intended difference
+from MeCab, which chooses the system entry. Such a tie needs a user entry in
+the detailed format that copies the context IDs and the cost of a system
+entry, for example to give a word another reading. An entry in the simple
+three-column format gets the cost and the context IDs of the dictionary's
+<code>metadata.json</code> (<code>default_word_cost</code>, <code>default_left_context_id</code> and
+<code>default_right_context_id</code>: <code>-10000</code>, <code>0</code> and <code>0</code> for IPADIC), so it
+practically never ties with a system entry.</p>
+<p>N-best search uses the same order. In addition, the first N-best result is
+now always the 1-best segmentation, the output of <code>segment</code>; up to v6 it
+could be another path when several paths had exactly the same cost. The
+costs of the N-best results do not change: only results with the same cost
+can change places, which can also change which of them is cut off at the
+<code>n</code>-th result. N-best search takes about 3% to 4% more instructions
+(<code>-N 3</code>); the speed of the 1-best segmentation does not change (within
+0.2%).</p>
+<p>MeCab's <code>mecab-dict-index</code> reads the CSV files in the order the file system
+lists them (readdir order), so for tied groups whose rows are in different
+files (in IPADIC-NEologd and ko-dic), MeCab's choice depends on the file
+system, while Lindera reads the files in name order.</p>
+<p>The dictionary files do not change, so this change needs no rebuild or
+re-download. There is no setting to restore the v6 behavior.</p>
+<h2 id="equal-cost-segmentations-keep-the-later-starting-word-as-in-mecab"><a class="header" href="#equal-cost-segmentations-keep-the-later-starting-word-as-in-mecab">Equal-cost segmentations keep the later-starting word, as in MeCab</a></h2>
+<p>Two segmentations can reach the same position with exactly the same cost
+while their last words start at different positions. MeCab keeps the one
+whose last word starts later: it puts every word at the head of the list of
+words that end where it ends, so the words that start later come first in
+that list, and of words of equal cost it keeps the first. Up to v6.2.0,
+Lindera kept the one whose last word starts earlier. v7.0.0 chooses as
+MeCab does:</p>
+<div class="table-wrapper"><table><thead><tr><th>Input (dictionary)</th><th>v6</th><th>v7 (as MeCab)</th></tr></thead><tbody>
+<tr><td><code>腸窒扶斯</code> (IPADIC)</td><td><code>腸 / 窒 / 扶斯</code></td><td><code>腸 / 窒扶 / 斯</code></td></tr>
+<tr><td><code>にフリーホイールダイオードや</code> (IPADIC)</td><td><code>フリーホイールダイオード</code> (one unknown word)</td><td><code>フリー / ホイール / ダイオード</code></td></tr>
+<tr><td><code>家系譜</code> (UniDic)</td><td><code>家 / 系譜</code></td><td><code>家系 / 譜</code></td></tr>
+<tr><td><code>차나 마셔</code> (ko-dic)</td><td><code>차나 / 마셔</code></td><td><code>차 / 나 / 마셔</code></td></tr>
+</tbody></table>
+</div>
+<p>Both segmentations of <code>腸窒扶斯</code> cost 28,382. Such ties are rare. The texts
+compared are <em>Botchan</em> (as one file, as paragraphs and as sentences), the
+3,587 paragraphs of <em>Kokoro</em> and <em>I Am a Cat</em> and the 8,100 sentences of UD
+Japanese GSD, each with IPADIC, IPADIC-NEologd and UniDic, and the 7,759
+lines of <em>Sangnoksu</em> with ko-dic: about 54,000 lines in all. 9 of them
+change, all to MeCab's segmentation, and none moves away from it. In Decompose mode, which MeCab does not have, 0 to 2 lines
+per text change in the same way.</p>
+<p>When whitespace is skipped (see
+<a href="#whitespace-is-skipped-in-the-lattice">Whitespace is skipped in the lattice</a>),
+the word that ends later wins first, as in MeCab, which looks the next word
+up from every position a word ends at: an entry that ends with the space
+wins over a word that ends before it. One difference from MeCab remains in
+theory: after skipped whitespace, MeCab keeps a node for every position the
+previous word can end at, while Lindera keeps one, so two words that start
+right after the same whitespace and tie through previous words that end at
+different positions can be chosen differently. This needs an entry that
+ends with whitespace and an exact tie, and it does not occur in the texts
+compared.</p>
+<p>Among words that start at the same position, the order of
+<a href="#tied-entries-resolve-to-the-first-csv-row-as-in-mecab">Tied entries resolve to the first CSV row, as in MeCab</a>
+still applies, and the first N-best result is still the 1-best
+segmentation. When the context is carried across <code>、</code> or <code>。</code>, a tie
+between the words that end the previous sentence resolves the same way, as
+in one lattice over the line: the word that starts later wins (see
+<a href="#the-context-is-carried-across--and-">The context is carried across <code>、</code> and <code>。</code></a>).</p>
+<p>The 1-best segmentation takes 0.6% to 0.9% more instructions with IPADIC,
+IPADIC-NEologd and UniDic, with no measurable change in time, and about 2%
+more instructions and 2% to 5% more time with ko-dic. N-best search
+(<code>-N 3</code>) takes about 1% more instructions.</p>
+<p>The dictionary files do not change, so this change needs no rebuild or
+re-download. There is no setting to restore the v6 behavior.</p>
+<h2 id="lindera-tokenize-removes-only-the-line-terminator-and-writes-every-line"><a class="header" href="#lindera-tokenize-removes-only-the-line-terminator-and-writes-every-line"><code>lindera tokenize</code> removes only the line terminator and writes every line</a></h2>
+<p><code>lindera tokenize</code> reads its input line by line. Up to v6.2.0, it removed
+all the whitespace at both ends of each line before tokenizing it: spaces,
+tabs, U+3000, U+00A0 and the other Unicode whitespace (<code>str::trim</code>). The
+library, the language bindings and MeCab do not. v7.0.0 removes only the
+line terminator (<code>\n</code>, or <code>\r\n</code>) and tokenizes the rest of the line as the
+library does:</p>
+<div class="table-wrapper"><table><thead><tr><th>Input line (IPADIC)</th><th>v6</th><th>v7 (as MeCab)</th></tr></thead><tbody>
+<tr><td>Two spaces, <code>東京</code>, a space</td><td><code>東京</code> at bytes 0-6</td><td><code>東京</code> at bytes 2-8</td></tr>
+<tr><td>U+3000, <code>東京</code></td><td><code>東京</code> at 0-6</td><td>U+3000 (<code>記号,空白</code>) at 0-3, <code>東京</code> at 3-9</td></tr>
+<tr><td><code>東京</code>, U+3000</td><td><code>東京</code> at 0-6</td><td><code>東京</code> at 0-6, U+3000 (<code>記号,空白</code>) at 6-9</td></tr>
+<tr><td>U+00A0, <code>東京</code>, U+00A0</td><td><code>東京</code> at 0-6</td><td>U+00A0 (unknown, <code>記号,一般</code>) at 0-2, <code>東京</code> at 2-8, U+00A0 at 8-10</td></tr>
+</tbody></table>
+</div>
+<ul>
+<li>Spaces and tabs are <code>SPACE</code> characters, which the segmenter skips and
+drops from the output, so they still give no tokens; only the byte
+offsets of the tokens after them change, and now index the input line,
+as the library's offsets do.</li>
+<li>U+3000 at the start or end of a line is a token, as in the middle of a
+line, with IPADIC, IPADIC-NEologd (<code>記号,空白</code>) and UniDic (<code>空白</code>) (see
+<a href="#dictionary-entries-with-whitespace-are-kept">Dictionary entries with whitespace are kept</a>).
+In the 538 lines of <em>Botchan</em> as one file, where 202 lines start with an
+indent of U+3000, 206 such tokens appear and no other token changes. Text
+without whitespace at the ends of its lines, such as the 8,100 sentences
+of UD Japanese GSD and the 3,587 paragraphs of <em>Kokoro</em> and <em>I Am a Cat</em>,
+gives the same output as before.</li>
+<li>With <code>--keep-whitespace</code>, the spaces at the start and end of a line are
+tokens too: two spaces, <code>東京</code> and a space give three tokens.</li>
+<li>With <code>-N</code>, a line of spaces or tabs and an empty line give one result
+without tokens (<code>NBEST 1</code> and <code>EOS</code>), as in MeCab, instead of no result
+(see <a href="#n-best-results-cover-the-whole-input">N-best results cover the whole input</a>
+for the empty input). The costs of a line with U+3000 at an end include
+that token.</li>
+<li>The wakati format writes a line for every input line, or for every
+result with <code>-N</code>: a line without tokens, such as an empty line or a line
+of spaces, gives an empty line, as in MeCab. v6 wrote nothing for it, so
+the output had fewer lines than the input (<em>Botchan</em> as one file: 505
+output lines for its 538 input lines, 33 of them empty).</li>
+<li>The <code>\r</code> of a line that ends with <code>\r\n</code> is removed, and only that one
+<code>\r</code>. MeCab removes only the <code>\n</code> and outputs the <code>\r</code> as an unknown
+word; Lindera removes it so that text with Windows line endings does not
+end every line with a <code>\r</code> token.</li>
+</ul>
+<p>The library and the language bindings never trimmed their input, so they do
+not change, except for the N-best result of an empty input. The dictionary
+files do not change either, so this change needs no rebuild or re-download.
+No option restores the v6 behavior; to get the v6 offsets and tokens,
+remove the whitespace at the ends of each line before passing the text to
+<code>lindera tokenize</code>.</p>
+<h2 id="rust-api-changes-in-lindera_dictionary"><a class="header" href="#rust-api-changes-in-lindera_dictionary">Rust API changes in <code>lindera_dictionary</code></a></h2>
+<p>These affect only code that calls the lattice backtraces directly, or that
+creates dictionary metadata with <code>Metadata::new</code>:
+<code>lindera_dictionary::viterbi::Lattice</code> and
+<code>lindera_dictionary::nbest::NBestGenerator</code>, also reachable as
+<code>lindera::dictionary::viterbi::…</code>, <code>lindera::dictionary::Lattice</code> and
+<code>lindera::dictionary::nbest::…</code>, and
+<code>lindera_dictionary::dictionary::metadata::Metadata</code>, also reachable as
+<code>lindera::dictionary::Metadata</code>. The <code>Segmenter</code>, <code>Tokenizer</code>,
+<code>SegmentWorker</code> and <code>AnalysisWorker</code> APIs and the CLI are unaffected; the
+language bindings change only in their <code>Metadata</code> class (see
+<a href="#the-normalize_details-setting-is-removed">The <code>normalize_details</code> setting is removed</a>).</p>
+<div class="table-wrapper"><table><thead><tr><th>v6</th><th>v7</th></tr></thead><tbody>
+<tr><td><code>Lattice::tokens_offset() -&gt; Vec&lt;(usize, WordId)&gt;</code></td><td><code>Lattice::tokens_offset() -&gt; Vec&lt;TokenOffset&gt;</code></td></tr>
+<tr><td><code>Lattice::tokens_offset_into(&amp;mut Vec&lt;(usize, WordId)&gt;)</code></td><td><code>Lattice::tokens_offset_into(&amp;mut Vec&lt;TokenOffset&gt;) -&gt; Option&lt;usize&gt;</code></td></tr>
+<tr><td><code>Lattice::nbest_tokens_offset(n, unique, cost_threshold) -&gt; Vec&lt;(Vec&lt;(usize, WordId)&gt;, i64)&gt;</code></td><td><code>Lattice::nbest_tokens_offset(n, unique, cost_threshold) -&gt; Vec&lt;NBestPath&gt;</code></td></tr>
+<tr><td><code>NBestGenerator::next() -&gt; Option&lt;(Vec&lt;(usize, WordId)&gt;, i64)&gt;</code></td><td><code>NBestGenerator::next() -&gt; Option&lt;NBestPath&gt;</code></td></tr>
+<tr><td>—</td><td>New type aliases in <code>viterbi</code>: <code>TokenOffset = (usize, usize, WordId)</code> and <code>NBestPath = (Vec&lt;TokenOffset&gt;, i64)</code></td></tr>
+<tr><td>—</td><td>New in <code>viterbi</code>: <code>BosContext</code>, <code>LatticeOptions::bos</code>, <code>LatticeExit</code>, <code>Lattice::exits_into</code> and <code>Lattice::exit_tokens_offset_into</code></td></tr>
+<tr><td>—</td><td>New in <code>nbest</code>: <code>NBestGenerator::from_exit</code> and <code>NBestGenerator::next_with_bos</code></td></tr>
+<tr><td><code>Metadata::new(name, encoding, simple_word_cost, default_left_context_id, default_right_context_id, default_field_value, flexible_csv, skip_invalid_cost_or_id, normalize_details, schema, userdic_schema)</code></td><td><code>Metadata::new(name, encoding, simple_word_cost, default_left_context_id, default_right_context_id, default_field_value, flexible_csv, skip_invalid_cost_or_id, schema, userdic_schema)</code></td></tr>
+<tr><td><code>Metadata::normalize_details</code></td><td>Removed</td></tr>
+<tr><td><code>PrefixDictionaryBuilderOptions::normalize_details(value)</code></td><td>Removed</td></tr>
+<tr><td>—</td><td>New public field <code>Metadata::skip_whitespace: Option&lt;bool&gt;</code> (also <code>lindera_binding::CoreMetadata::skip_whitespace</code>)</td></tr>
+</tbody></table>
+</div>
+<p>Each token is now <code>(start, end, word_id)</code> instead of <code>(start, word_id)</code>,
+with byte offsets within the sentence. With whitespace skipped
+(<code>LatticeOptions::skip_whitespace</code>, new in v7), a token does not always end
+where the next one starts: skipped whitespace can lie in between, and only
+the lattice knows how much of it belongs to the entry. The returned end leaves
+the skipped whitespace out and keeps the whitespace an entry ends with (see
+<a href="#dictionary-entries-with-whitespace-are-kept">Dictionary entries with whitespace are kept</a>).
+With whitespace kept in the lattice, as <code>set_text</code> and <code>set_text_nbest</code> do,
+the end is the next token's start, or the end of the sentence for the last
+token, as before. <code>nbest_tokens_offset</code> with <code>unique</code> now compares the
+<code>(start, end)</code> pairs of the paths instead of their starts.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use lindera::dictionary::viterbi::TokenOffset;
+
+// v6: a token ends where the next one starts
+let offsets = lattice.tokens_offset();
+for (i, &amp;(start, word_id)) in offsets.iter().enumerate() {
+    let end = offsets.get(i + 1).map_or(sentence.len(), |&amp;(next, _)| next);
+    handle(&amp;sentence[start..end], word_id);
+}
+
+// v7: the end is returned
+let offsets: Vec&lt;TokenOffset&gt; = lattice.tokens_offset();
+for &amp;(start, end, word_id) in &amp;offsets {
+    handle(&amp;sentence[start..end], word_id);
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The paths of <code>nbest_tokens_offset</code> and <code>NBestGenerator::next</code> hold the same
+triples.</p>
+<p><code>tokens_offset_into</code> also returns the BOS index of the best path: the index
+in <code>LatticeOptions::bos</code> of the BOS edge it starts from, <code>Some(0)</code> with the
+default single BOS edge, and <code>None</code> when the lattice holds no complete path.
+A call written as a statement compiles unchanged; where a <code>()</code> value is
+expected, such as the body of a closure passed to <code>for_each</code>, add a <code>;</code>.</p>
+<p>The new items are what the segmenter uses to carry the context across
+<code>、</code> and <code>。</code> (see
+<a href="#the-context-is-carried-across--and-">The context is carried across <code>、</code> and <code>。</code></a>).
+They change nothing for existing code:</p>
+<ul>
+<li><code>BosContext</code> and <code>LatticeOptions::bos</code>: a sentence can start from several
+BOS edges, each with a right context ID and a cost. The default, an empty
+slice, is the single BOS edge of v6.</li>
+<li><code>LatticeExit</code>, <code>Lattice::exits_into</code> and <code>Lattice::exit_tokens_offset_into</code>:
+for each right context ID of the words that end the sentence, the best path
+to such a word without the EOS connection, and its tokens.</li>
+<li><code>NBestGenerator::from_exit</code> and <code>NBestGenerator::next_with_bos</code>: the paths
+that end with the right context ID of an exit, without EOS, in ascending
+order of cost, and each path together with the BOS index it starts from.
+<code>next</code> returns the paths of <code>next_with_bos</code> without the BOS index.</li>
+</ul>
+<p><code>nbest_tokens_offset</code> is meant for the default single BOS edge: with
+several, it does not say which one a path starts from. Use
+<code>NBestGenerator::next_with_bos</code> there.</p>
+<p><code>Metadata::new</code> loses its ninth argument, <code>normalize_details</code>: delete it
+from the call. <code>Metadata</code> no longer has the field, and
+<code>PrefixDictionaryBuilderOptions</code> (in <code>lindera_dictionary::builder::prefix_dictionary</code>)
+no longer has the method, because the builder keeps every entry as written
+(see
+<a href="#dash-and-tilde-spellings-are-kept-as-written">Dash and tilde spellings are kept as written</a>).
+<code>Metadata</code> still reads a <code>metadata.json</code> that contains the key, and ignores
+it. For binding authors, <code>lindera_binding::CoreMetadata</code> loses the field the
+same way, and <code>CoreMetadata::new</code> takes 10 arguments instead of 11.</p>
+<p><code>Metadata</code> gains the public field <code>skip_whitespace: Option&lt;bool&gt;</code>, the
+dictionary's default for whitespace skipping (see
+<a href="#whitespace-is-skipped-in-the-lattice">Whitespace is skipped in the lattice</a>),
+and so does <code>lindera_binding::CoreMetadata</code>. Neither struct is
+<code>#[non_exhaustive]</code>, so a struct literal that lists every field without
+<code>..</code> no longer compiles: add <code>skip_whitespace: None</code>, or end the literal
+with <code>..Default::default()</code>. <code>Metadata::new</code> and <code>CoreMetadata::new</code> set it
+to <code>None</code>, which skips whitespace.</p>
+<h2 id="who-does-not-need-to-act"><a class="header" href="#who-does-not-need-to-act">Who does not need to act</a></h2>
+<ul>
+<li><strong>Users of the language bindings and the CLI</strong>: the Python, Node.js, Ruby,
+PHP, and WASM packages and <code>lindera-cli</code> keep their package names, and
+their APIs apart from the <code>normalize_details</code> setting of <code>Metadata</code> (see
+<a href="#the-normalize_details-setting-is-removed">The <code>normalize_details</code> setting is removed</a>).
+The restructuring is internal to the Rust crates. The output changes are
+the IPADIC conjugation fix, which matters only if you read those two fields
+by name, the whitespace entries, which matter only for text with U+3000
+(IPADIC, IPADIC-NEologd, UniDic) or with spaces (SudachiDict), the
+segmentation of text that contains whitespace, the <code>char.def</code> fix, which
+matters only for text with <code>Ð</code>, <code>々</code> or <code>〇</code>, the context carried across
+<code>、</code> and <code>。</code>, which matters only for text with <code>、</code> or <code>。</code> inside a line,
+the N-best fix, which matters only for N-best results for input with
+more than one sentence or for an empty input, the unknown words that
+start at every position, which matter for runs of katakana, symbols or
+Latin letters in normal mode, the dash and tilde spellings, which
+matter only for text with <code>―</code>, <code>—</code>, <code>～</code> or <code>〜</code> with IPADIC or
+IPADIC-NEologd, the choice among
+tied entries, which matters only if you read token details such as the
+reading or the base form, or the order of N-best results with the same
+cost, the choice between segmentations of equal cost, which changes the
+segmentation of a few lines, and, in the CLI only, the whitespace at the
+ends of an input line and the output of lines without tokens, which
+matter only for lines that start or end with whitespace and for the
+wakati and N-best output of empty lines and lines of spaces.</li>
+<li><strong>Projects staying on <code>lindera = "6"</code></strong>: the 6.x releases of <code>lindera</code> and
+<code>lindera-analysis</code> remain on crates.io and keep working together. Nothing
+changes until you bump the major version.</li>
+<li><strong>Users of the segmenter API only</strong>: code that uses <code>Segmenter</code>,
+<code>load_dictionary</code>, <code>Mode</code>, and the other <code>lindera::…</code> items of v6 compiles
+unchanged with <code>lindera = "7"</code>, unless it calls the lattice backtraces of
+<code>lindera::dictionary::Lattice</code> or creates metadata with
+<code>lindera::dictionary::Metadata::new</code> (see
+<a href="#rust-api-changes-in-lindera_dictionary">Rust API changes in <code>lindera_dictionary</code></a>).
+The default build now also compiles
+<code>lindera-analysis</code> and its dependencies (kanaria, regex, serde_yaml_ng,
+unicode-blocks, unicode-normalization, unicode-segmentation); to keep the
+v6 dependency tree, set <code>default-features = false, features = ["mmap"]</code>.</li>
+</ul>
+<h2 id="upgrade-checklist"><a class="header" href="#upgrade-checklist">Upgrade checklist</a></h2>
+<p>Rust crate users:</p>
+<ul>
+<li>Bump <code>lindera</code> to <code>"7"</code> and, in the same commit, either bump
+<code>lindera-analysis</code> to <code>"7"</code> or remove it and import from
+<code>lindera::analysis::…</code>.</li>
+<li>Optionally replace <code>lindera_analysis::</code> with <code>lindera::analysis::</code> in <code>use</code>
+paths — both name the same types.</li>
+<li>If you set <code>default-features = false</code>, add <code>"analysis"</code> (for the
+<code>Tokenizer</code> and filters) and <code>"mmap"</code> (for memory-mapped loading) to
+<code>features</code> as needed.</li>
+<li>Replace <code>features = ["lindera-&lt;dictionary&gt;"]</code> with
+<code>features = ["embed-&lt;dictionary&gt;"]</code>.</li>
+<li>Optionally drop a direct <code>lindera-dictionary</code> dependency in favor of
+<code>lindera::dictionary::core</code>, <code>::builder</code>, <code>::viterbi</code>, and the other
+re-exported modules.</li>
+<li>If you call <code>Lattice::tokens_offset</code>, <code>tokens_offset_into</code>,
+<code>nbest_tokens_offset</code> or <code>NBestGenerator::next</code>, destructure
+<code>(start, end, word_id)</code> and use the returned end instead of the next
+token's start.</li>
+<li>If you use the <code>()</code> value of <code>Lattice::tokens_offset_into</code>, for example
+as the body of a closure, add a <code>;</code>: it now returns the BOS index of the
+best path.</li>
+<li>If you call <code>Metadata::new</code>, delete its ninth argument,
+<code>normalize_details</code>, and stop using the <code>Metadata::normalize_details</code>
+field and <code>PrefixDictionaryBuilderOptions::normalize_details</code>.</li>
+<li>If you build <code>Metadata</code> with a struct literal that lists every field, add
+<code>skip_whitespace: None</code> or end it with <code>..Default::default()</code>.</li>
+</ul>
+<p>Binding authors:</p>
+<ul>
+<li>Depend on <code>lindera-binding</code> instead of <code>lindera-binding-core</code>, and replace
+<code>lindera_binding_core::</code> with <code>lindera_binding::</code>.</li>
+<li>Delete the <code>normalize_details</code> argument of <code>CoreMetadata::new</code>, which now
+takes 10 arguments, and stop using the <code>CoreMetadata::normalize_details</code>
+field.</li>
+<li>If you build <code>CoreMetadata</code> with a struct literal that lists every field,
+add <code>skip_whitespace: None</code> or end it with <code>..Default::default()</code>.</li>
+</ul>
+<p>Build environments:</p>
+<ul>
+<li>Rename <code>LINDERA_DICTIONARIES_PATH</code> to <code>LINDERA_BUILD_DICTIONARY_CACHE_DIR</code>
+in shell profiles, CI configuration, and container images.</li>
+</ul>
+<p>Users of IPADIC or IPADIC-NEologd:</p>
+<ul>
+<li>If you read <code>conjugation_type</code> or <code>conjugation_form</code> by name (including
+the CLI's JSON output), expect the two values to trade places.</li>
+<li>Rebuild or re-download dictionary directories made with v6.2.0 or earlier,
+or swap the two names in their <code>metadata.json</code>.</li>
+</ul>
+<p>Users of IPADIC, IPADIC-NEologd, UniDic or SudachiDict with text that
+contains U+3000 or spaces:</p>
+<ul>
+<li>Expect U+3000 to be <code>記号,空白</code> (IPADIC) or <code>空白</code> (UniDic) tokens, and
+SudachiDict to segment spaced text much closer to Sudachi. Drop U+3000 with
+<code>japanese_stop_tags</code> or NFKC normalization if you do not want it.</li>
+<li>Rebuild or re-download dictionary directories made with v6.2.0 or earlier
+to get the whitespace entries.</li>
+</ul>
+<p>Everyone who segments text that contains whitespace:</p>
+<ul>
+<li>Expect MeCab's segmentation for such text (most visible with ko-dic; not
+with SudachiDict, which keeps whitespace in the lattice as Sudachi does). If
+you need the v6 handling of whitespace, set <code>skip_whitespace(false)</code>,
+<code>"skip_whitespace": false</code>, or <code>--disable-skip-whitespace</code>; the other
+output changes in this guide still apply.</li>
+<li>Expect the token of a dictionary entry that ends with a space (in
+IPADIC-NEologd, ko-dic and SudachiDict) to include that space, as in
+MeCab.</li>
+</ul>
+<p>Users of any bundled dictionary with text that contains <code>Ð</code>, <code>々</code> or <code>〇</code>:</p>
+<ul>
+<li>Expect <code>Ð</code> to stay in the output, and <code>々</code> after an unknown kanji to be a
+token of its own.</li>
+<li>Rebuild or re-download dictionary directories made with v6.2.0 or earlier
+to get the new character categories.</li>
+</ul>
+<p>Users of <code>lindera train</code>:</p>
+<ul>
+<li>Give every range line of your <code>char.def</code> at least one category.</li>
+<li>If your <code>char.def</code> has single-code-point or overlapping lines, retrain:
+the <code>%t</code> feature now follows those lines as MeCab does.</li>
+</ul>
+<p>Users of Japanese text with <code>、</code> or <code>。</code> inside a line:</p>
+<ul>
+<li>Expect some words after <code>、</code> or <code>。</code> to be read in the context of the
+words before them, mostly as MeCab reads them. No setting restores the v6
+output.</li>
+</ul>
+<p>Users of N-best results:</p>
+<ul>
+<li>Expect every result to cover the whole input, and the results from the
+second one on to change for input with more than one sentence.</li>
+<li>For a line with <code>、</code> or <code>。</code>, expect every cost to change, the first
+result's included: the costs are those of one lattice over the line.</li>
+<li>If you set a cost threshold, it now applies to the total cost of the
+whole input, not to each sentence.</li>
+<li>Expect an empty input to give one result without tokens, as an input of
+only whitespace does, instead of no result.</li>
+<li>Expect the first result to be the 1-best segmentation also when several
+paths have exactly the same cost; results with the same cost can change
+places.</li>
+</ul>
+<p>Users of normal mode with text that has runs of katakana, symbols or Latin
+letters:</p>
+<ul>
+<li>Expect such runs to be split where MeCab splits them: katakana joined by
+<code>・</code> (IPADIC, IPADIC-NEologd, UniDic), unknown symbols right after a
+dictionary symbol, Korean sentence-final punctuation such as <code>."</code>, and,
+with CC-CEDICT, Latin words that start with <code>A</code>, <code>B</code>, <code>P</code>, <code>Q</code> or <code>T</code>
+and runs of Japanese kana. No setting restores the v6 output, and
+<code>unknown_word_ladder(false)</code> no longer gives the output of Lindera before
+v6.</li>
+<li>Expect katakana- and Latin-heavy text to take about 13% more
+instructions, and very long katakana runs in N-best to take much more
+time and memory.</li>
+</ul>
+<p>Users of IPADIC or IPADIC-NEologd with text that contains <code>―</code>, <code>—</code>, <code>～</code> or
+<code>〜</code>:</p>
+<ul>
+<li>Expect entries spelled with <code>―</code> or <code>～</code> to match text spelled the same
+way, as in MeCab, and text with <code>—</code> or <code>〜</code> to miss the 12 IPADIC and
+1,085 IPADIC-NEologd entries that it found only through the old rewrite.
+With IPADIC, map <code>—</code> to <code>―</code> and <code>～</code> to <code>〜</code> with the <code>mapping</code> character
+filter if both spellings should find the entries.</li>
+<li>Rebuild or re-download dictionary directories made with v6.2.0 or earlier
+to get the entries as written.</li>
+</ul>
+<p>Users who read token details such as the reading or the base form:</p>
+<ul>
+<li>Expect words with tied entries to get the details of the first CSV row,
+as in MeCab: with IPADIC, <code>狡い</code> reads <code>ズルイ</code>, not <code>コスイ</code>. No rebuild
+is needed, and no setting restores the v6 output.</li>
+<li>In a user dictionary, expect the first of tied rows to be chosen. A user
+entry still wins a tie with a system entry, unlike in MeCab.</li>
+</ul>
+<p>Everyone who compares the segmentation with v6 or with MeCab:</p>
+<ul>
+<li>Expect the few places where two segmentations cost exactly the same to be
+segmented as MeCab segments them, with the last word that starts later
+(IPADIC <code>腸窒扶斯</code> is <code>腸 / 窒扶 / 斯</code>). No rebuild is needed, and no
+setting restores the v6 output.</li>
+</ul>
+<p>Language bindings and CLI:</p>
+<ul>
+<li>Remove <code>normalize_details</code> where you create <code>Metadata</code>: the Python
+keyword argument, the ninth positional argument of Ruby's <code>Metadata.new</code>,
+the last argument of PHP's <code>Metadata</code> constructor, and the
+<code>normalizeDetails</code> option in Node.js. Stop reading the property and the
+key of the same name in <code>to_dict()</code>, <code>to_h</code>, <code>toArray()</code> and <code>toObject()</code>.</li>
+<li>With <code>lindera tokenize</code>, expect the offsets of a line that starts with
+whitespace to index the input line, U+3000 at the start or end of a line
+to be a token (IPADIC, IPADIC-NEologd, UniDic), <code>--keep-whitespace</code> to
+output the spaces there, <code>-N</code> to give one result for an empty line or a
+line of spaces, and the wakati format to write an empty line for a line
+without tokens. To get the v6 offsets and tokens, remove the whitespace
+at the ends of each line first.</li>
+<li>Nothing else to do beyond taking the 7.0.0 release, apart from the
+dictionary, whitespace, <code>、</code> and <code>。</code>, N-best, unknown-word, dash and
+tilde, tied-entry and equal-cost items above and the <code>lindera tokenize</code>
+item.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="migration_v5_to_v6.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="development.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="migration_v5_to_v6.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="development.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
